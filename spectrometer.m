@@ -1,3 +1,7 @@
+% spectrometer contains the basic controls for connecting to the
+% spectrometer and initializing a connection.
+%     it should be run at the beginning of every usage of the Raman GUI
+
 close all
 clear all
 
