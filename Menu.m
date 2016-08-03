@@ -37,20 +37,19 @@ classdef Menu < handle
         %This function descripes the properties of each of the GUI objects,
         %callbacks, locations etc, and is run at the opening of the GUI.
         function menu = Menu
-           
-            addpath('C:\Users\Public\Pictures\Sample Pictures\')                           %adds a path to where all the menu images are stored
+            
             
             menu.Body = figure('Position', [350, 160, 900, 550]);
             menu.Background = axes('Parent', menu.Body, 'Position', [0,0,1,1]);
             
-            menu.Picture = imread('Menu_Background.jpg');
+            menu.Picture = imread('Images/Menu_Backdrop.png');
             image(menu.Background, menu.Picture)
             axis off
             
-            menu.Trans_Button = uicontrol(menu.Body, 'Style', 'pushbutton', 'Position', [710, 270, 100, 20], 'String', 'Transmittance', 'Callback', @menu.transButton_Callback);
-            menu.Reflect_Button = uicontrol(menu.Body, 'Style', 'pushbutton', 'Position', [510, 270, 100, 20], 'String', 'Reflectance', 'Callback', @menu.reflectButton_Callback);
-            menu.Abs_Button = uicontrol(menu.Body, 'Style', 'pushbutton', 'Position', [310, 270, 100, 20], 'String', 'Absorbance', 'Callback', @menu.absButton_Callback);
-            menu.Raman_Button = uicontrol(menu.Body, 'Style', 'pushbutton', 'Position', [110, 270, 100, 20], 'String', 'Raman', 'Callback', @menu.ramanButton_Callback);
+            menu.Trans_Button = uicontrol(menu.Body, 'ForegroundColor', [1,1,1],  'BackgroundColor', [.05, .05, .4], 'Style', 'pushbutton', 'Position', [715, 270, 170, 40], 'String', 'Transmittance','FontSize', 20, 'Callback', @menu.transButton_Callback);
+            menu.Reflect_Button = uicontrol(menu.Body, 'ForegroundColor', [1,1,1],  'BackgroundColor', [.1, .1, .4], 'Style', 'pushbutton', 'Position', [490, 270, 170, 40], 'String', 'Reflectance','FontSize', 20, 'Callback', @menu.reflectButton_Callback);
+            menu.Abs_Button = uicontrol(menu.Body, 'ForegroundColor', [1,1,1], 'BackgroundColor', [.15, .15, .4], 'Style', 'pushbutton', 'Position', [260, 270, 170, 40], 'String', 'Absorbance','FontSize', 20, 'Callback', @menu.absButton_Callback);
+            menu.Raman_Button = uicontrol(menu.Body, 'ForegroundColor', [1,1,1], 'BackgroundColor', [.2, .2, .4], 'Style', 'pushbutton', 'Position', [25, 270, 170, 40], 'String', 'Raman','FontSize', 20, 'Callback', @menu.ramanButton_Callback);
             
             
         end

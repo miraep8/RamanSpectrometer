@@ -54,14 +54,13 @@ classdef spectra_Class < handle
             %it is written in a way to make the graphics between all of
             %the programs fundamentally similar.
             
-            addpath('C:\Users\Public\Pictures\Sample Pictures\')
             
             global NUM_SCANS
             app.Dark_Spectrum = zeros(1, NUM_SCANS);
             
             app.Body = figure('Position', [100, 50, 1300, 700]);
             app.Background = axes('Parent', app.Body, 'Position', [0,0,1,1]);
-            app.Picture = imread('Raman_Background.jpg');
+            app.Picture = imread('Images/app_background.jpg');
             image(app.Background, app.Picture)
             axis off
             app.Limits_Panel = uipanel( app.Body, 'Title', 'Control X Axis', 'Position', [.85,.55 ,.1,.185]);
