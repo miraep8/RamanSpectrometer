@@ -3,6 +3,7 @@ classdef spectra_Class < handle
     %Spectra GUIS.
     %   It controls the basic interfaces and common handles for things like
     %   controlling the x limits and sizing the various components.
+    %test change :)
     
     properties
                                  %GUI Objects
