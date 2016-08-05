@@ -41,7 +41,6 @@ classdef Menu < handle
             
             menu.Body = figure('Position', [350, 160, 900, 550]);
             menu.Background = axes('Parent', menu.Body, 'Position', [0,0,1,1]);
-            git 
             menu.Picture = imread('Images/Menu_Backdrop.png');
             image(menu.Background, menu.Picture)
             axis off
@@ -50,6 +49,8 @@ classdef Menu < handle
             menu.Reflect_Button = uicontrol(menu.Body, 'ForegroundColor', [1,1,1],  'BackgroundColor', [.1, .1, .4], 'Style', 'pushbutton', 'Position', [490, 270, 170, 40], 'String', 'Reflectance','FontSize', 20, 'Callback', @menu.reflectButton_Callback);
             menu.Abs_Button = uicontrol(menu.Body, 'ForegroundColor', [1,1,1], 'BackgroundColor', [.15, .15, .4], 'Style', 'pushbutton', 'Position', [260, 270, 170, 40], 'String', 'Absorbance','FontSize', 20, 'Callback', @menu.absButton_Callback);
             menu.Raman_Button = uicontrol(menu.Body, 'ForegroundColor', [1,1,1], 'BackgroundColor', [.2, .2, .4], 'Style', 'pushbutton', 'Position', [25, 270, 170, 40], 'String', 'Raman','FontSize', 20, 'Callback', @menu.ramanButton_Callback);
+            
+            end
             
             
         end

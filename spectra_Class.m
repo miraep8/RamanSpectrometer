@@ -3,7 +3,7 @@ classdef spectra_Class < handle
     %Spectra GUIS.
     %   It controls the basic interfaces and common handles for things like
     %   controlling the x limits and sizing the various components.
-    %test change :)
+
     
     properties
                                  %GUI Objects
@@ -34,7 +34,8 @@ classdef spectra_Class < handle
         XMax_Num = 1000;
         Spectrum
         Wavelengths
-        Picture                 %holds the image that is put on the background
+        Picture            %holds the image that is put on the background
+        keepGraphing
         
         XMin_Start = '200';                           %Beginning Strings
         XMax_Start = '1000';
@@ -81,6 +82,11 @@ classdef spectra_Class < handle
             
             uistack(app.Graph, 'down')
             
+            app.keepGraphing = 1;
+            while app.keepGraphing == 1
+                plot(app)
+            end                
+            
             
         end
     
@@ -124,7 +130,7 @@ classdef spectra_Class < handle
         %plotting.  Many of the subclasses overwride this to some degree,
         %but it takes care of the graphics, as well as updating the
         %darkSpectrum, and preparing data. 
-        function plot_Callback(app, hObject, eventdata)
+        function plot(app)
             
             app.Picture = imread('plot_background.jpg');
             image(app.Background, app.Picture)
@@ -150,7 +156,7 @@ classdef spectra_Class < handle
             end
             
             app.Spectrum = app.Spectrum - app.Dark_Spectrum;
-            app.spectrum = smoothing(app.spectrum); 
+            app.Spectrum = smoothing(app.Spectrum); 
              
             
         end

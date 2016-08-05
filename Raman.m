@@ -56,6 +56,7 @@ classdef Raman < spectra_Class
                 raman.ramanShift = raman.Wavelengths;
             end
             plot(raman.Graph, raman.spectrum, raman.ramanShift)
+            linkdata on
         end
     end
     
