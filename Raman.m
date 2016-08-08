@@ -14,7 +14,7 @@ classdef Raman < spectra_Class
         greenLight_532          %GUI Objects
         redLight_633
         normal_Spectrum
-        Radio_Panel
+        radio_Panel
         
         cutoff = 0;                 %Variables for data manipulation
         greenText = 'Green (532)';
@@ -30,10 +30,10 @@ classdef Raman < spectra_Class
            
             raman@spectra_Class;
             %declaration and placement of Raman Specific buttons
-            raman.Radio_Panel = uibuttongroup(raman.Body, 'Title', 'Wavelength of Laser', 'Position', [.85, .22, .1, .14]);
-            raman.normal_Spectrum = uicontrol(raman.Radio_Panel, 'Style', 'radiobutton', 'String', raman.normalText, 'Position', [12, 60, 140, 15], 'Callback', @raman.normal_Callback);
-            raman.greenLight_532 = uicontrol(raman.Radio_Panel, 'Style', 'radiobutton', 'String', raman.greenText, 'Position', [12, 10, 140, 15], 'Callback', @raman.green_Callback);
-            raman.redLight_633 = uicontrol(raman.Radio_Panel, 'Style', 'radiobutton', 'String', raman.redText, 'Position', [12, 35, 140, 15], 'Callback', @raman.red_Callback);
+            raman.radio_Panel = uibuttongroup(raman.body, 'Title', 'Wavelength of Laser', 'Position', [.85, .22, .1, .14]);
+            raman.normal_Spectrum = uicontrol(raman.radio_Panel, 'Style', 'radiobutton', 'String', raman.normalText, 'Position', [12, 60, 140, 15], 'Callback', @raman.normal_Callback);
+            raman.greenLight_532 = uicontrol(raman.radio_Panel, 'Style', 'radiobutton', 'String', raman.greenText, 'Position', [12, 10, 140, 15], 'Callback', @raman.green_Callback);
+            raman.redLight_633 = uicontrol(raman.radio_Panel, 'Style', 'radiobutton', 'String', raman.redText, 'Position', [12, 35, 140, 15], 'Callback', @raman.red_Callback);
             
             raman.keepGraphing = 1;
             while raman.keepGraphing == 1
@@ -59,12 +59,12 @@ classdef Raman < spectra_Class
         function ramanPlot(raman)
             plot(raman)
             if raman.cutoff ~= 0
-                raman.ramanShift = ((1/raman.cutoff) - 1./raman.Wavelengths)*10^7;
+                raman.ramanShift = ((1/raman.cutoff) - 1./raman.wavelengths)*10^7;
             else
-                raman.ramanShift = raman.Wavelengths;
+                raman.ramanShift = raman.wavelengths;
             end
-            plot(raman.Graph, raman.ramanShift, raman.Spectrum)
-            xlim([raman.XMin_Num, raman.XMax_Num])
+            plot(raman.graph, raman.ramanShift, raman.spectrum)
+            xlim([raman.xMin_Num, raman.xMax_Num])
         end
     end
     
