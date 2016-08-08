@@ -21,13 +21,13 @@ classdef spectra_light_sampling < spectra_Class
            %this is the constructor.  It describes how to create the light
            %button. 
            
-           app.light_Sample = uicontrol(app.sample_Panel, 'Style', 'togglebutton', 'String', 'Light Sample', 'Position', [15, 42, 100, 17], 'Callback', @app.light_Spectra_Callback);
+           app.light_Sample = uicontrol(app.sample_Panel, 'Style', 'togglebutton', 'String', 'Light Sample', 'Position', [15, 42, 100, 17], 'Callback', @app.Light_Spectra_Callback);
             
             
         end
         
-        function light_Spectra_Callback (app, hObject, eventdata)
-           app.light_Spectrum =  
+        function Light_Spectra_Callback (app, hObject, eventdata)
+           app.Light_Spectrum =  
             
         end
         
