@@ -64,6 +64,7 @@ classdef Raman < spectra_Class
                 raman.ramanShift = raman.Wavelengths;
             end
             plot(raman.Graph, raman.ramanShift, raman.Spectrum)
+            xlim([raman.XMin_Num, raman.XMax_Num])
         end
     end
     

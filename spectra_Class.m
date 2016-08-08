@@ -73,7 +73,7 @@ classdef spectra_Class < handle
             app.Scans = uicontrol(app.Specta_Panel, 'Style', 'edit', 'Position', [15, 10, 100, 20], 'String', app.Scans_Start, 'Callback', @app.Scans_Callback); 
             app.Integration = uicontrol(app.Specta_Panel, 'Style', 'edit', 'Position', [15, 67, 100, 20], 'String', app.Int_Start, 'Callback', @app.Int_Callback);
             app.XMin_Label = uicontrol(app.Limits_Panel, 'Style', 'text', 'String', app.XMin_Label_Text, 'Position', [15, 35, 100, 20]);          
-            app.XMax_Label = uicontrol(app.Limits_Panel, 'Style', 'text', 'String', app.XMin_Label_Text, 'Position', [15, 85, 100, 20]); 
+            app.XMax_Label = uicontrol(app.Limits_Panel, 'Style', 'text', 'String', app.XMax_Label_Text, 'Position', [15, 85, 100, 20]); 
             app.Scans_Label = uicontrol(app.Specta_Panel, 'Style', 'text', 'String', app.Scans_Label_Text, 'Position', [15, 33, 100, 30]); 
             app.Int_Label = uicontrol(app.Specta_Panel, 'Style', 'text', 'String', app.Int_Label_Text, 'Position', [15, 91, 100, 30]); 
             app.Plot = uicontrol(app.Body, 'Style', 'pushbutton', 'String', 'Plot', 'Position', [1120, 338, 100, 30], 'Callback', @app.plot_Callback);
