@@ -152,7 +152,7 @@ classdef spectra_Class < handle
             end
             
             app.Spectrum = app.Spectrum - app.Dark_Spectrum;
-            app.Spectrum = smoothing(app.Spectrum); 
+%             app.Spectrum = smoothing(app.Spectrum); 
              
             
         end

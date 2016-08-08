@@ -36,12 +36,10 @@ classdef Raman < spectra_Class
             raman.redLight_633 = uicontrol(raman.Radio_Panel, 'Style', 'radiobutton', 'String', raman.redText, 'Position', [12, 35, 140, 15], 'Callback', @raman.red_Callback);
             
             raman.keepGraphing = 1;
-            while raman.keepGraphing <= 10
+            while raman.keepGraphing == 1
                 ramanPlot(raman)
                 pause(1)
-                raman.keepGraphing = raman.keepGraphing + 1;
             end  
-            ramanPlot(raman)
             
             
         end
