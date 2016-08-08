@@ -34,6 +34,12 @@ classdef Raman < spectra_Class
             raman.greenLight_532 = uicontrol(raman.Radio_Panel, 'Style', 'radiobutton', 'String', raman.greenText, 'Position', [12, 10, 140, 15], 'Callback', @raman.green_Callback);
             raman.redLight_633 = uicontrol(raman.Radio_Panel, 'Style', 'radiobutton', 'String', raman.redText, 'Position', [12, 35, 140, 15], 'Callback', @raman.red_Callback);
             
+            raman.keepGraphing = 1;
+            while raman.keepGraphing == 1
+                ramanPlot(raman)
+            end  
+            
+            
         end
         
         function normal_Callback(raman, hObject, eventdata)
@@ -48,15 +54,14 @@ classdef Raman < spectra_Class
             raman.cutoff = 633;
         end
         
-        function plot_Callback(raman, hObject, eventdata)
-            plot_Callback@super.plot_Callback(raman, hObject, eventdata)
+        function ramanPlot(raman)
+            plot(raman)
             if raman.cutoff ~= 0
                 raman.ramanShift = ((1/raman.cutoff) - 1./raman.Wavelengths)*10^7;
             else
                 raman.ramanShift = raman.Wavelengths;
             end
             plot(raman.Graph, raman.spectrum, raman.ramanShift)
-            linkdata on
         end
     end
     
