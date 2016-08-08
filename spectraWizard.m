@@ -1,27 +1,22 @@
 % initialize spectrometer
 function [spectra, wavelengths] = spectraWizard(scans, intTime)
 
-
-wrapper = com.oceanoptics.omnidriver.api.wrapper.Wrapper();
-
-
-wrapper.openAllSpectrometers();
-
-%number of scans per average
+spectrometer
 
 % set integration time to 1 millisec (1000 microsec)
 wrapper.setIntegrationTime(0, intTime);
 
 % take 10,000 spectra
-time_start = datestr(now,'dd-mm-yyyy HH:MM:SS.FFF');
+% time_start = datestr(now,'dd-mm-yyyy HH:MM:SS.FFF');
 for i = 1:scans
   spectrum(:,i) = wrapper.getSpectrum(0);
 end
-time_end = datestr(now,'dd-mm-yyyy HH:MM:SS.FFF');
+% time_end = datestr(now,'dd-mm-yyyy HH:MM:SS.FFF');
 
 % display the time it took
 %display(time_start);
 %display(time_end);
+
 global NUM_SCANS
 average = (1:NUM_SCANS);
 

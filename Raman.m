@@ -28,6 +28,7 @@ classdef Raman < spectra_Class
         
         function raman = Raman
            
+            raman@spectra_Class;
             %declaration and placement of Raman Specific buttons
             raman.Radio_Panel = uibuttongroup(raman.Body, 'Title', 'Wavelength of Laser', 'Position', [.85, .22, .1, .14]);
             raman.normal_Spectrum = uicontrol(raman.Radio_Panel, 'Style', 'radiobutton', 'String', raman.normalText, 'Position', [12, 60, 140, 15], 'Callback', @raman.normal_Callback);
@@ -35,9 +36,12 @@ classdef Raman < spectra_Class
             raman.redLight_633 = uicontrol(raman.Radio_Panel, 'Style', 'radiobutton', 'String', raman.redText, 'Position', [12, 35, 140, 15], 'Callback', @raman.red_Callback);
             
             raman.keepGraphing = 1;
-            while raman.keepGraphing == 1
+            while raman.keepGraphing <= 10
                 ramanPlot(raman)
+                pause(1)
+                raman.keepGraphing = raman.keepGraphing + 1;
             end  
+            ramanPlot(raman)
             
             
         end
@@ -61,7 +65,7 @@ classdef Raman < spectra_Class
             else
                 raman.ramanShift = raman.Wavelengths;
             end
-            plot(raman.Graph, raman.spectrum, raman.ramanShift)
+            plot(raman.Graph, raman.ramanShift, raman.Spectrum)
         end
     end
     

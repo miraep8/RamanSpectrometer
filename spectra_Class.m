@@ -28,8 +28,8 @@ classdef spectra_Class < handle
         Dark_Size = 0;
         New_Dark = 1;
         Dark_Bool = 0;
-        Scans_Num
-        Int_Num
+        Scans_Num = 50;
+        Int_Num = 1000;
         XMin_Num = 200;
         XMax_Num = 1000;
         Spectrum
@@ -75,17 +75,17 @@ classdef spectra_Class < handle
             app.XMin_Label = uicontrol(app.Limits_Panel, 'Style', 'text', 'String', app.XMin_Label_Text, 'Position', [15, 35, 100, 20]);          
             app.XMax_Label = uicontrol(app.Limits_Panel, 'Style', 'text', 'String', app.XMin_Label_Text, 'Position', [15, 85, 100, 20]); 
             app.Scans_Label = uicontrol(app.Specta_Panel, 'Style', 'text', 'String', app.Scans_Label_Text, 'Position', [15, 33, 100, 30]); 
-            app.Int_Label = uicontrol(app.Specta_Panel, 'Style', 'text', 'String', app.Int_Label_Text, 'Position', [15, 91, 100, 20]); 
+            app.Int_Label = uicontrol(app.Specta_Panel, 'Style', 'text', 'String', app.Int_Label_Text, 'Position', [15, 91, 100, 30]); 
             app.Plot = uicontrol(app.Body, 'Style', 'pushbutton', 'String', 'Plot', 'Position', [1120, 338, 100, 30], 'Callback', @app.plot_Callback);
             app.Dark_Sample = uicontrol(app.Sample_Panel, 'Style', 'togglebutton', 'String', 'Dark Sample', 'Position', [15, 20, 100, 17], 'Callback', @app.Dark_Spectra_Callback);
             app.Graph = axes('Parent', app.Body, 'Position', [.07,.1,.75,.8], 'XLim', [app.XMin_Num, app.XMax_Num]);
             
             uistack(app.Graph, 'down')
-            
-            app.keepGraphing = 1;
-            while app.keepGraphing == 1
-                plot(app)
-            end                
+%             
+%             app.keepGraphing = 1;
+%             while app.keepGraphing == 1
+%                 plot(app)
+%             end                
             
             
         end
@@ -131,10 +131,6 @@ classdef spectra_Class < handle
         %but it takes care of the graphics, as well as updating the
         %darkSpectrum, and preparing data. 
         function plot(app)
-            
-            app.Picture = imread('plot_background.jpg');
-            image(app.Background, app.Picture)
-            axis off
             
             uistack(app.Graph, 'top')
             

@@ -52,8 +52,6 @@ classdef Menu < handle
             
             end
             
-            
-        end
         
         function transButton_Callback(menu, hObject, eventdata)
             
