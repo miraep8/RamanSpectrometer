@@ -18,33 +18,37 @@ classdef spectra_Class < handle
         xMax_Label              %Holds text label for XMax Button
         scans_Label             %Holds text label for Scans Button
         int_Label               %Holds text label for Int Button
-        limits_Panel
-        specta_Panel
-        sample_Panel
-        dark_Sample
+        limits_Panel            %The panel containing the X Limit controls
+        specta_Panel            %The panel containing the scans/int controls
+        sample_Panel            %The panel for the dark (and in subclasses) light sampling
+        dark_Sample             %The toggle-button for the Dark background sample 
         
-        dark_Spectrum ;         %Variables for Data Processing
-        dark_Size = 0;
-        new_Dark = 1;
-        dark_Bool = 0;
-        scans_Num = 50;
-        int_Num = 1000;
-        xMin_Num = 200;
-        xMax_Num = 1000;
-        spectrum
-        wavelengths
-        picture            %holds the image that is put on the background
-        keepGraphing = 1;      %keeps track of whether subclasses should keep updating. 
         
-        xMin_Start = '200';                           %Beginning Strings
-        xMax_Start = '1000';
-        int_Start = '1000';
-        scans_Start = '50';
+                        %Variables for Data Processing
+        dark_Spectrum ;         %stores the electrical dark vector sample       
+        dark_Size = 0;          %records how many spectra have been used to make the daks sample
+        new_Dark = 1;           %tracks if it is the first dark-spectra
+        dark_Bool = 0;          %records whether or not the program should be collecting dark samples
+        scans_Num = 50;         %the number of scans to average the spectrometer should take
+        int_Num = 1000;         %the integration time of the spectrometer in ms
+        xMin_Num = 200;         %the min x axis value displayed.
+        xMax_Num = 1000;        %the max x axis value displayed
+        spectrum                %stores the latest spectrum from spectrometer
+        wavelengths             %stores the latest wavelengths from the spectrometer
+        picture                 %holds the image that is put on the background
+        keepGraphing = 1;       %keeps track of whether subclasses should keep updating. 
         
-        xMin_Label_Text = 'X axis Min Value';
-        xMax_Label_Text = 'X axis Max Value';
-        scans_Label_Text = 'Number of Scans per Average';
-        int_Label_Text = 'Integration Time (ms)';
+                        %Beginning Strings
+        xMin_Start = '200';      %the default X Min read at the beggining                        
+        xMax_Start = '1000';     %the default X MAx read at the beginning
+        int_Start = '1000';      %the original int time text
+        scans_Start = '50';      %the original scans to average text
+        
+                        %Labels for UIControls
+        xMin_Label_Text = 'X axis Min Value';   %label for XMin
+        xMax_Label_Text = 'X axis Max Value';   %label for XMax
+        scans_Label_Text = 'Number of Scans per Average';   %label for scans
+        int_Label_Text = 'Integration Time (ms)';   %label for int time
         
     end
     
@@ -79,12 +83,6 @@ classdef spectra_Class < handle
             app.graph = axes('Parent', app.body, 'Position', [.07,.1,.75,.8], 'XLim', [app.xMin_Num, app.xMax_Num]);
             
             uistack(app.graph, 'down')
-%             
-%             app.keepGraphing = 1;
-%             while app.keepGraphing == 1
-%                 plot(app)
-%             end                
-            
             
         end
     
