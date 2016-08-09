@@ -22,7 +22,8 @@ classdef spectra_Class < handle
         specta_Panel            %The panel containing the scans/int controls
         sample_Panel            %The panel for the dark (and in subclasses) light sampling
         dark_Sample             %The toggle-button for the Dark background sample 
-        
+        pause                   %UIControl to pause graphing
+        stop                    %UIcontrol to stop graphing and exit program
         
                         %Variables for Data Processing
         dark_Spectrum ;         %stores the electrical dark vector sample       
@@ -37,6 +38,7 @@ classdef spectra_Class < handle
         wavelengths             %stores the latest wavelengths from the spectrometer
         picture                 %holds the image that is put on the background
         keepGraphing = 1;       %keeps track of whether subclasses should keep updating. 
+        halt = 0;
         
                         %Beginning Strings
         xMin_Start = '200';      %the default X Min read at the beggining                        
@@ -80,6 +82,7 @@ classdef spectra_Class < handle
             app.scans_Label = uicontrol(app.specta_Panel, 'Style', 'text', 'String', app.scans_Label_Text, 'Position', [15, 33, 100, 30]); 
             app.int_Label = uicontrol(app.specta_Panel, 'Style', 'text', 'String', app.int_Label_Text, 'Position', [15, 91, 100, 30]); 
             app.dark_Sample = uicontrol(app.sample_Panel, 'Style', 'togglebutton', 'String', 'Dark Sample', 'Position', [15, 20, 100, 17], 'Callback', @app.dark_Spectra_Callback);
+            app.pause = uicontrol(app.body, 'Style', 'togglebutton', 'String', 'Pause', 'Position', [15, 20, 100, 17], 'Callback', @app.pause_Callback);
             app.graph = axes('Parent', app.body, 'Position', [.07,.1,.75,.8], 'XLim', [app.xMin_Num, app.xMax_Num]);
             
             uistack(app.graph, 'down')
@@ -119,6 +122,17 @@ classdef spectra_Class < handle
         function int_Callback(app, hObject, eventdata)
             
             app.int_Num = str2double(get(hObject, 'String'))*1000;
+            
+        end
+        
+        function pause_Callback(app, hObject, eventdata)
+            
+            pressed = get(hObject, 'Value');
+            if pressed == get(hObject, 'Max')
+                app.halt = 1;
+            elseif pressed == get(hObject, 'Min')
+                app.halt = 0;
+            end
             
         end
         
