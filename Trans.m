@@ -8,12 +8,10 @@ classdef Trans < spectra_light_sampling
     %   using a white sample.
     
     % Author Mirae Parker
-    % Last Edit: 18.07.16
+    % Last Edit: 09.08.16
     
     
     properties
-        
-        keepGraphing = 1;
         
     end
     
@@ -22,13 +20,13 @@ classdef Trans < spectra_light_sampling
         function trans = Trans
             trans@spectra_light_sampling;
             
-           while keepGraphing == 1
+           while trans.keepGraphing == 1
                transPlot(trans);
            end
             
         end
         
-        function transPlot(trans);
+        function transPlot(trans)
             lightPlot(trans)
             
         

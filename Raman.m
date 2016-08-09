@@ -11,16 +11,18 @@ classdef Raman < spectra_Class
     
     properties
         
-        greenLight_532          %GUI Objects
-        redLight_633
-        normal_Spectrum
-        radio_Panel
+                   %GUI Objects
+        greenLight_532          %the Radio-Button that indicates Green Raman       
+        redLight_633            %the Radio-Button that indicates Red Raman
+        normal_Spectrum         %the Radio Button that indicates normal spectrum
+        radio_Panel             %the panel which contains all the radiobuttons
         
-        cutoff = 0;                 %Variables for data manipulation
-        greenText = 'Green (532)';
-        redText = 'Red (633)';
-        normalText = 'No Laser';
-        ramanShift;
+                   %Variables for data manipulation
+        cutoff = 0;                     %Orginally cutoff is at 0, regualar spectrum         
+        greenText = 'Green (532)';      %The text labeling the Green button
+        redText = 'Red (633)';          %The text labeling the Red button
+        normalText = 'No Laser';        %The text labeling the Normal button
+        ramanShift;                     %The vector which will contain the Raman Shift wavelengths
         
     end, 
     
@@ -34,8 +36,7 @@ classdef Raman < spectra_Class
             raman.normal_Spectrum = uicontrol(raman.radio_Panel, 'Style', 'radiobutton', 'String', raman.normalText, 'Position', [12, 60, 140, 15], 'Callback', @raman.normal_Callback);
             raman.greenLight_532 = uicontrol(raman.radio_Panel, 'Style', 'radiobutton', 'String', raman.greenText, 'Position', [12, 10, 140, 15], 'Callback', @raman.green_Callback);
             raman.redLight_633 = uicontrol(raman.radio_Panel, 'Style', 'radiobutton', 'String', raman.redText, 'Position', [12, 35, 140, 15], 'Callback', @raman.red_Callback);
-            
-            raman.keepGraphing = 1;
+
             while raman.keepGraphing == 1
                 ramanPlot(raman)
                 pause(.2)
@@ -56,6 +57,11 @@ classdef Raman < spectra_Class
             raman.cutoff = 633;
         end
         
+        %this plot function runs continually, wheich means that the spectra
+        %is continuosly updated, creating a continuously updated Data.  It
+        %overrides the plot function from the original specra_Class
+        %superclass, and does a bit of algebra on the spectrum to calculate
+        %the Raman shift for the x axis. 
         function ramanPlot(raman)
             plot(raman)
             if raman.cutoff ~= 0

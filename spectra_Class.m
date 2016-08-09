@@ -34,7 +34,7 @@ classdef spectra_Class < handle
         spectrum
         wavelengths
         picture            %holds the image that is put on the background
-        keepGraphing
+        keepGraphing = 1;      %keeps track of whether subclasses should keep updating. 
         
         xMin_Start = '200';                           %Beginning Strings
         xMax_Start = '1000';
@@ -155,6 +155,9 @@ classdef spectra_Class < handle
             
         end
         
+        %function monitors the Dark Spectra button, when it is initiated it
+        %begins a new dark spectra sampling process.  When it is toggeled
+        %off it switches off the sampling process for plot as well. 
         function dark_Spectra_Callback(app, hObject, eventdata)
             
             pressed = get(hObject, 'Value');
