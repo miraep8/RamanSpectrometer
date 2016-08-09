@@ -1,4 +1,4 @@
-classdef Trans < spectra_Class
+classdef Trans < spectra_light_sampling
         %Trans  This class is an extension of the Spectra Class.  Its function
     %is to create the specialized type of plot that is specific for a
     %Transmittion plots.
@@ -13,9 +13,24 @@ classdef Trans < spectra_Class
     
     properties
         
+        keepGraphing = 1;
+        
     end
     
     methods
+        
+        function trans = Trans
+            trans@spectra_light_sampling;
+            
+           while keepGraphing == 1
+               transPlot(trans);
+           end
+            
+        end
+        
+        function transPlot(trans);
+            lightPlot(trans)
+            
         
     end
 end

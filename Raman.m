@@ -38,7 +38,7 @@ classdef Raman < spectra_Class
             raman.keepGraphing = 1;
             while raman.keepGraphing == 1
                 ramanPlot(raman)
-                pause(1)
+                pause(.2)
             end  
             
             
