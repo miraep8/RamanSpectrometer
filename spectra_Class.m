@@ -32,8 +32,8 @@ classdef spectra_Class < handle
         dark_Bool = 0;          %records whether or not the program should be collecting dark samples
         scans_Num = 50;         %the number of scans to average the spectrometer should take
         int_Num = 1000;         %the integration time of the spectrometer in ms
-        xMin_Num = 200;         %the min x axis value displayed.
-        xMax_Num = 1000;        %the max x axis value displayed
+        xMin_Num         %the min x axis value displayed.
+        xMax_Num        %the max x axis value displayed
         spectrum                %stores the latest spectrum from spectrometer
         wavelengths             %stores the latest wavelengths from the spectrometer
         picture                 %holds the image that is put on the background
@@ -41,8 +41,8 @@ classdef spectra_Class < handle
         halt = 0;
         
                         %Beginning Strings
-        xMin_Start = '200';      %the default X Min read at the beggining                        
-        xMax_Start = '1000';     %the default X MAx read at the beginning
+        xMin_Start               %the default X Min read at the beggining                        
+        xMax_Start               %the default X MAx read at the beginning
         int_Start = '1000';      %the original int time text
         scans_Start = '50';      %the original scans to average text
         
@@ -64,6 +64,12 @@ classdef spectra_Class < handle
             
             global NUM_SCANS
             app.dark_Spectrum = zeros(1, NUM_SCANS);
+            
+            [yValues, xValues] = spectraWizard(app.scans_Num, app.int_Num);
+            app.xMin_Num = xValues(1);
+            app.xMax_Num = xValues(length(xValues));
+            app.xMax_Start = num2str(app.xMax_Num); 
+            app.xMin_Start = num2str(app.xMin_Num);
             
             app.body = figure('Position', [100, 50, 1300, 700]);
             app.background = axes('Parent', app.body, 'Position', [0,0,1,1]);

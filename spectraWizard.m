@@ -33,4 +33,5 @@ end
 
 %returns the spectra and wavelengths accumulated
 spectra = average;
-wavelengths = wrapper.getWavelengths(0);
+waves = wrapper.getWavelengths(0);
+wavelengths = waves;
