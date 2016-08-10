@@ -51,6 +51,8 @@ classdef spectra_Class < handle
         xMax_Label_Text = 'X axis Max Value';   %label for XMax
         scans_Label_Text = 'Number of Scans per Average';   %label for scans
         int_Label_Text = 'Integration Time (ms)';   %label for int time
+        light_Back = 'Images/light_background.png';
+        dark_Back = 'Images/dark_background.png';
         
     end
     
@@ -151,24 +153,8 @@ classdef spectra_Class < handle
             uistack(app.graph, 'top')
             
            [app.spectrum, app.wavelengths] = spectraWizard(app.scans_Num, app.int_Num);
-           
-            if app.dark_Bool == 0
-                
-                if app.new_Dark == 1
-                    global NUM_SCANS
-                    app.new_Dark = 0;
-                    app.dark_Spectrum = zeros(1, NUM_SCANS);
-                    app.dark_Size = 0;
-                end
-                
-                next = app.dark_Spectrum*app.dark_Size + app.spectrum;
-                app.dark_Spectrum = next/(app.dark_Size + 1);
-                app.dark_Size = app.dark_Size + 1;
-                
-            end
-            
             app.spectrum = app.spectrum - app.dark_Spectrum;
-%             app.Spectrum = smoothing(app.Spectrum); 
+%           app.Spectrum = smoothing(app.Spectrum); 
              
             
         end
@@ -178,14 +164,7 @@ classdef spectra_Class < handle
         %off it switches off the sampling process for plot as well. 
         function dark_Spectra_Callback(app, hObject, eventdata)
             
-            pressed = get(hObject, 'Value');
-            if pressed == get(hObject, 'Max')
-                app.dark_Bool = 0;
-                app.new_Dark = 1;
-                app.dark_Size = 0;
-            elseif pressed == get(hObject, 'Min')
-                app.dark_Bool = 1;
-            end
+            app.dark_Spectrum = Backdrop_Sample(app.scans_Num, app.int_Num, app.xMin_Num, app.xMax_Num, app.dark_Back);
         end
     end
 end

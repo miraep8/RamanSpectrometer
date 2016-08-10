@@ -11,3 +11,6 @@ spectrum = wrapper.getSpectrum(0);
 %the length of the original scan sets the length of all the other vectors.
 global NUM_SCANS
 NUM_SCANS = length(spectrum);
+
+% TEST STUFF I CHANGED, PLEASE DELETE ME!!!!!!!
+NUM_SCANS = 50;

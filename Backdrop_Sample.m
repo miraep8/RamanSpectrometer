@@ -24,14 +24,14 @@ classdef Backdrop_Sample < handle
     
     methods
         
-        function sample = Backdrop_Sample (numScans, intTime, xMin, xMax)
+        function sample = Backdrop_Sample (numScans, intTime, xMin, xMax, picName)
             
             global NUM_SCANS
             sample.back_Spectrum = zeros(1, NUM_SCANS);
            
             sample.body = figure('Position', [350, 160, 900, 550]);
             sample.background = axes('Parent', sample.body, 'Position', [0,0,1,1]);
-            sample.picture = imread('Images/light_background.png');
+            sample.picture = imread(picName);
             image(sample.background, sample.picture)
             axis off
             
@@ -49,12 +49,15 @@ classdef Backdrop_Sample < handle
                pause(.2)
             end
             
+            closeThis(sample)
+            
         end
         
         function takeSample_Callback(sample, hObject, eventdata)
             
            [sample.back_Spectrum, waves] = spectraWizard(sample.scans*sample.factor, sample.int);
             sample.keepGraphing = 0;
+            
         end
         
         function backPlot(sample)
@@ -62,7 +65,21 @@ classdef Backdrop_Sample < handle
             [sample.back_Spectrum, wavelengths] = spectraWizard(sample.scans, sample.int);
             plot(sample.graph, wavelengths, sample.back_Spectrum)
             xlim([sample.min, sample.max])
+        
+           
+% TEST STUFF I CHANGED, PLEASE DELETE ME!!!!!!!
+            pause (1)
             
+            plot(sample.graph, (1:50), 2*(1:50));
+            
+            pause (1)
+            
+            
+        end
+        
+        function closeThis(sample)
+            
+            close(sample.body)
         end
 
         

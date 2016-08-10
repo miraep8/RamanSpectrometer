@@ -3,6 +3,16 @@
 % integration time. 
 function [spectra, wavelengths] = spectraWizard(scans, intTime)
 
+
+% TEST STUFF I CHANGED, PLEASE DELETE ME!!!!!!!
+spectra = (1:50);
+wavelengths = (1:50);
+return
+
+
+
+
+
 %must be called to reinitialize the wrapper.
 spectrometer
 
