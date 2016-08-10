@@ -30,6 +30,7 @@ classdef Light_Sample < handle
             
         end
         
+        function spectrum = getSpectrum(sample)
 
         
     end
