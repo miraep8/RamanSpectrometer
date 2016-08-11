@@ -22,7 +22,24 @@ classdef Reflect < spectra_Class
             
             reflect@spectra_Class;
             
-            while
+            global NUM_SCANS
+            reflect.light_Spectrum = zeros(1, NUM_SCANS -1);
+            
+            light = Backdrop_Sample(reflect.scans_Num, reflect.int_Num, reflect.xMin_Num, reflect.xMax_Num, reflect.light_Back);
+            reflect.light_Spectrum = light.back_Spectrum;
+            
+            while reflect.keepGraphing == 1
+                reflectPlot(reflect)
+            end
+            
+        end
+        
+        function reflectPlot(reflect)
+           
+            plot(reflect)
+            
+            
+        end
             
         
     end
