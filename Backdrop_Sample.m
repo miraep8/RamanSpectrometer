@@ -4,6 +4,10 @@ classdef Backdrop_Sample < handle
     %   It has a support function that allows for the user to retrieve the
     %   spectrum collected, and update the sample backdrop privately. 
     
+        %Author: Mirae Parker
+        %Last Edit: 11.08.16
+
+    
     properties
         body
         background
@@ -27,7 +31,7 @@ classdef Backdrop_Sample < handle
         function sample = Backdrop_Sample (numScans, intTime, xMin, xMax, picName)
             
             global NUM_SCANS
-            sample.back_Spectrum = zeros(1, NUM_SCANS);
+            sample.back_Spectrum = zeros(1, NUM_SCANS -1);
            
             sample.body = figure('Position', [350, 160, 900, 550]);
             sample.background = axes('Parent', sample.body, 'Position', [0,0,1,1]);
@@ -65,15 +69,6 @@ classdef Backdrop_Sample < handle
             [sample.back_Spectrum, wavelengths] = spectraWizard(sample.scans, sample.int);
             plot(sample.graph, wavelengths, sample.back_Spectrum)
             xlim([sample.min, sample.max])
-        
-           
-% TEST STUFF I CHANGED, PLEASE DELETE ME!!!!!!!
-            pause (1)
-            
-            plot(sample.graph, (1:50), 2*(1:50));
-            
-            pause (1)
-            
             
         end
         

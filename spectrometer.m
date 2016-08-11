@@ -2,6 +2,10 @@
 % spectrometer and initializing a connection.
 %     it should be run at the beginning of every usage of the Raman GUI
 
+    %Author: Mirae Parker
+    %Last Edit: 11.08.16
+
+
 %adds the path to the spectrometer file
 javaaddpath('C:\Program Files\Ocean Optics\OmniDriver\OOI_HOME\OmniDriver.jar');
 wrapper = com.oceanoptics.omnidriver.api.wrapper.Wrapper();
@@ -12,5 +16,4 @@ spectrum = wrapper.getSpectrum(0);
 global NUM_SCANS
 NUM_SCANS = length(spectrum);
 
-% TEST STUFF I CHANGED, PLEASE DELETE ME!!!!!!!
-NUM_SCANS = 50;
+

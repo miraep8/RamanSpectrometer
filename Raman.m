@@ -7,7 +7,7 @@ classdef Raman < spectra_Class
     %   are taken to cancel out the background noise.
     
     % Author Mirae Parker
-    % Last Edit: 13.07.16
+    % Last Edit: 11.08.16
     
     properties
         
@@ -66,6 +66,7 @@ classdef Raman < spectra_Class
         %superclass, and does a bit of algebra on the spectrum to calculate
         %the Raman shift for the x axis. 
         function ramanPlot(raman)
+   
             plot(raman)
             if raman.cutoff ~= 0
                 raman.ramanShift = ((1/raman.cutoff) - 1./raman.wavelengths)*10^7;

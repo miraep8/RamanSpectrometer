@@ -3,6 +3,9 @@ classdef spectra_Class < handle
     %Spectra GUIS.
     %   It controls the basic interfaces and common handles for things like
     %   controlling the x limits and sizing the various components.
+    
+    %Author: Mirae Parker
+    %Last Edit: 11.08.16
 
     
     properties
@@ -65,7 +68,7 @@ classdef spectra_Class < handle
             
             
             global NUM_SCANS
-            app.dark_Spectrum = zeros(1, NUM_SCANS);
+            app.dark_Spectrum = zeros(1, NUM_SCANS-1);
             
             [yValues, xValues] = spectraWizard(app.scans_Num, app.int_Num);
             app.xMin_Num = xValues(1);
@@ -164,7 +167,8 @@ classdef spectra_Class < handle
         %off it switches off the sampling process for plot as well. 
         function dark_Spectra_Callback(app, hObject, eventdata)
             
-            app.dark_Spectrum = Backdrop_Sample(app.scans_Num, app.int_Num, app.xMin_Num, app.xMax_Num, app.dark_Back);
+            dark = Backdrop_Sample(app.scans_Num, app.int_Num, app.xMin_Num, app.xMax_Num, app.dark_Back);
+            app.dark_Spectrum = dark.back_Spectrum;
         end
     end
 end

@@ -1,17 +1,12 @@
 % this function facilitates communication with the spectrometer.  It
 % accumulates all of the scans for the spectrum, and sets the proper
 % integration time. 
+ 
+    %Author: Mirae Parker
+    %Last Edit: 11.08.16
+
+
 function [spectra, wavelengths] = spectraWizard(scans, intTime)
-
-
-% TEST STUFF I CHANGED, PLEASE DELETE ME!!!!!!!
-spectra = (1:50);
-wavelengths = (1:50);
-return
-
-
-
-
 
 %must be called to reinitialize the wrapper.
 spectrometer
@@ -42,6 +37,6 @@ for k = 1:NUM_SCANS
 end
 
 %returns the spectra and wavelengths accumulated
-spectra = average;
+spectra = average(2:end);
 waves = wrapper.getWavelengths(0);
-wavelengths = waves;
+wavelengths = waves(2:end);
