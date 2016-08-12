@@ -39,7 +39,7 @@ classdef Backdrop_Sample < handle
             image(sample.background, sample.picture)
             axis off
             
-            sample.back_Sample = uicontrol(sample.body, 'Style', 'togglebutton', 'String', 'Take Light Sample', 'Position', [15, 20, 200, 17], 'Callback', @sample.takeSample_Callback);
+            sample.back_Sample = uicontrol(sample.body, 'Style', 'togglebutton', 'String', 'Take Sample', 'Position', [15, 20, 200, 17], 'Callback', @sample.takeSample_Callback);
             
             sample.scans = numScans;
             sample.int = intTime;
