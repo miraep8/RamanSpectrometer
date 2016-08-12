@@ -151,7 +151,7 @@ classdef spectra_Class < handle
         %plotting.  Many of the subclasses overwride this to some degree,
         %but it takes care of the graphics, as well as updating the
         %darkSpectrum, and preparing data. 
-        function plot(app)
+        function plotSpectra(app)
             
             uistack(app.graph, 'top')
             

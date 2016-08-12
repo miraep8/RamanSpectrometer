@@ -67,7 +67,7 @@ classdef Raman < spectra_Class
         %the Raman shift for the x axis. 
         function ramanPlot(raman)
    
-            plot(raman)
+            plotSpectra(raman)
             if raman.cutoff ~= 0
                 raman.ramanShift = ((1/raman.cutoff) - 1./raman.wavelengths)*10^7;
             else

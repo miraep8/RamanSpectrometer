@@ -25,9 +25,17 @@ classdef light_Spectra < spectra_Class
             sample = Backdrop_Sample(light.scans_Num, light.int_Num, light.xMin_Num, light.xMax_Num, light.light_Back);
             light.light_Spectrum = sample.back_Spectrum;
             
+            while light.keepGraphing == 1
+                lightPlot(light)
+            end
+            
         end
         function lightPlot(light)
-            plot(light)
+            
+            plotSpectra(light)
+            reflected = light.spectrum/(light.light_Spectrum -light.dark_Spectrum);
+            plot(light.graph, light.wavelengths, reflected)
+            
         end
         
         function light.light_Spectra_Callback(light, hObject, eventdata)
