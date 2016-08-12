@@ -1,4 +1,4 @@
-classdef light_Spectra < spectra_Class
+classdef regular_Spectra < spectra_Class
     %light_Spectra is an extension of the spectra_Class class that allows
     %for the ligt Sampling capability to be demanded as well.
     %   Very similar to dark sampling, and uses the same helper function
@@ -7,13 +7,16 @@ classdef light_Spectra < spectra_Class
     properties
         light_Spectrum
         light_Button
+        isAbs_Bool = 0;
     end
     
     methods
         
-        function light = light_Spectra
+        function light = regular_Spectra (isAbs)
            
             light@spectra_Class
+            
+            light.isAbs_Bool = isAbs;
             
             global NUM_SCANS
             light.light_Spectrum = zeros(1, NUM_SCANS -1);
@@ -34,6 +37,11 @@ classdef light_Spectra < spectra_Class
             
             plotSpectra(light)
             reflected = light.spectrum/(light.light_Spectrum -light.dark_Spectrum);
+            
+            if light.isAbs_Bool == 1
+                reflected = log(reflected);
+            end
+                
             plot(light.graph, light.wavelengths, reflected)
             
         end

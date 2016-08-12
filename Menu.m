@@ -55,21 +55,21 @@ classdef Menu < handle
         %opens the Trans class when the button is clicked
         function transButton_Callback(menu, hObject, eventdata)
             
-            Trans
+            regular_Spectra(0)
             
         end
         
         %opens the Reflect class when the button is clicked        
         function reflectButton_Callback(menu, hObject, eventdata)
             
-            Reflect
+            regular_Spectra(0)
             
         end
         
         %opens the Abs class when the button is clicked         
         function absButton_Callback(menu, hObject, eventdata)
               
-            Abs
+            regular_Spectra(1)
         end
         
         %opens the Raman class when the button is clicked         
