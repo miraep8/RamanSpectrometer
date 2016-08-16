@@ -86,10 +86,19 @@ classdef Raman < spectra_Class
             if raman.recentChange == 0
                 raman.recentChange = 1;
                 raman.xMin_Num = raman.wavelengths(1);
-                raman.xMax_Num = raman.wavelengths(length(raman.wavelenghts));
+                raman.xMax_Num = raman.wavelengths(length(raman.wavelengths));
             end
                 
             plot(raman.graph, raman.wavelengths, raman.spectrum)
+           
+            hold on
+            [~, n] = size(raman.saved_Spectra);
+            for k = 1:n
+               plot(raman.graph, raman.wavelengths, raman.saved_Spectra(:, k)) 
+            end
+            
+            hold off    
+            
             xlim([raman.xMin_Num, raman.xMax_Num])
             xlabel(raman.x_Text)
             ylabel(raman.y_Text)
