@@ -1,8 +1,12 @@
 classdef regular_Spectra < spectra_Class
-    %light_Spectra is an extension of the spectra_Class class that allows
-    %for the ligt Sampling capability to be demanded as well.
-    %   Very similar to dark sampling, and uses the same helper function
-    %   Backdrop_Sample to accomplish this.
+    %regular Spectra contains all of the functionality for Transmittance 
+    %Reflectance and Absorbance Spectra.  
+    %   It contains a bool to differentiate between Absorbance which is the
+    %   neg. logarithm of Transmittance, and the other two types of plots.
+    %   Reflectance and Transmittance have an identical relationship
+    %   between light which the sample recieves and that which reaches the
+    %   detector again, the only difference being the direction of the
+    %   incident light. 
     
     properties
         light_Spectrum
@@ -12,44 +16,50 @@ classdef regular_Spectra < spectra_Class
     
     methods
         
-        function light = regular_Spectra (isAbs)
+        function reg = regular_Spectra (isAbs)
            
-            light@spectra_Class
+            reg@spectra_Class
             
-            light.isAbs_Bool = isAbs;
+            reg.isAbs_Bool = isAbs;
             
             global NUM_SCANS
-            light.light_Spectrum = zeros(1, NUM_SCANS -1);
+            reg.light_Spectrum = zeros(1, NUM_SCANS -1);
             
-            light.sample_Panel = uipanel(light.body, 'Title', 'Background Sampling', 'Position', [.85, .37, .1, .12]);
-            light.light_Button = uicontrol(light.sample_Panel, 'Style', 'togglebutton', 'String', 'Light Sample', 'Position', [15, 40, 100, 17], 'Callback', @light.light_Spectra_Callback);
-            light.dark_Sample = uicontrol(light.sample_Panel, 'Style', 'togglebutton', 'String', 'Dark Sample', 'Position', [15, 12, 100, 17], 'Callback', @light.dark_Spectra_Callback);
+            reg.sample_Panel = uipanel(reg.body, 'Title', 'Background Sampling', 'Position', [.85, .37, .1, .12]);
+            reg.light_Button = uicontrol(reg.sample_Panel, 'Style', 'togglebutton', 'String', 'Light Sample', 'Position', [15, 40, 100, 17], 'Callback', @reg.light_Spectra_Callback);
+            reg.dark_Sample = uicontrol(reg.sample_Panel, 'Style', 'togglebutton', 'String', 'Dark Sample', 'Position', [15, 12, 100, 17], 'Callback', @reg.dark_Spectra_Callback);
             
-            sample = Backdrop_Sample(light.scans_Num, light.int_Num, light.xMin_Num, light.xMax_Num, light.light_Back);
-            light.light_Spectrum = sample.back_Spectrum;
+            sample = Backdrop_Sample(reg.scans_Num, reg.int_Num, reg.xMin_Num, reg.xMax_Num, reg.light_Back);
+            reg.light_Spectrum = sample.back_Spectrum;
             
-            while light.keepGraphing == 1
-                lightPlot(light)
+            while reg.keepGraphing == 1
+                lightPlot(reg)
             end
-            
-        end
-        function lightPlot(light)
-            
-            plotSpectra(light)
-            reflected = light.spectrum/(light.light_Spectrum -light.dark_Spectrum);
-            
-            if light.isAbs_Bool == 1
-                reflected = log(reflected);
-            end
-                
-            plot(light.graph, light.wavelengths, reflected)
             
         end
         
-        function light.light_Spectra_Callback(light, hObject, eventdata)
+        %light plot is similar to the plot Spectra function in the
+        %spectra_Class, however it also uses a light standard and uses this
+        %to calculate transmittance, reflectance and absorption. 
+        function lightPlot(reg)
             
-            sample = Backdrop_Sample(light.scans_Num, light.int_Num, light.xMin_Num, light.xMax_Num, light.light_Back);
-            light.dark_Spectrum = sample.back_Spectrum;
+            plotSpectra(reg)
+            reflected = reg.spectrum/(reg.light_Spectrum -reg.dark_Spectrum);
+            
+            if reg.isAbs_Bool == 1
+                reflected = -log10(reflected);
+            end
+                
+            plot(reg.graph, reg.wavelengths, reflected)
+            
+        end
+        
+        %this call back function aolows the user to collect a whole new
+        %light background sample by clicking on the light sample button. 
+        function light_Spectra_Callback(reg, hObject, eventdata)
+            
+            sample = Backdrop_Sample(reg.scans_Num, reg.int_Num, reg.xMin_Num, reg.xMax_Num, reg.light_Back);
+            reg.dark_Spectrum = sample.back_Spectrum;
             
         end
     end
