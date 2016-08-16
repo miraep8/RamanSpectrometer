@@ -51,6 +51,9 @@ classdef regular_Spectra < spectra_Class
             end
                 
             plot(reg.graph, reg.wavelengths, reflected)
+            xlim([raman.xMin_Num, raman.xMax_Num])
+            xlabel(raman.x_Text)
+            ylabel(raman.y_Text)
             
         end
         

@@ -50,12 +50,15 @@ classdef spectra_Class < handle
         scans_Start = '50';      %the original scans to average text
         
                         %Labels for UIControls
-        xMin_Label_Text = 'X axis Min Value';   %label for XMin
-        xMax_Label_Text = 'X axis Max Value';   %label for XMax
-        scans_Label_Text = 'Number of Scans per Average';   %label for scans
-        int_Label_Text = 'Integration Time (ms)';   %label for int time
-        light_Back = 'Images/light_background.png';
-        dark_Back = 'Images/dark_background.png';
+        xMin_Text = 'X axis Min Value';          %label for XMin
+        xMax_Text = 'X axis Max Value';          %label for XMax
+        scans_Text = 'Number of Scans per Average';   %label for scans
+        int_Text = 'Integration Time (ms)';      %label for int time
+        light_Back = 'Images/light_background.png';    %address of light sampling backdrop image
+        dark_Back = 'Images/dark_background.png';      %address of dark sampling backdrop image
+        x_Text = 'Wavelength (nm)';                    %label for the x axis
+        y_Text = 'Intensity';                          %label for the y axis
+        
         
     end
     
@@ -88,10 +91,10 @@ classdef spectra_Class < handle
             app.xMax = uicontrol(app.limits_Panel, 'Style', 'edit', 'Position', [15, 60, 100, 20], 'String', app.xMax_Start, 'Callback', @app.xMax_Callback);
             app.scans = uicontrol(app.specta_Panel, 'Style', 'edit', 'Position', [15, 10, 100, 20], 'String', app.scans_Start, 'Callback', @app.scans_Callback); 
             app.integration = uicontrol(app.specta_Panel, 'Style', 'edit', 'Position', [15, 67, 100, 20], 'String', app.int_Start, 'Callback', @app.int_Callback);
-            app.xMin_Label = uicontrol(app.limits_Panel, 'Style', 'text', 'String', app.xMin_Label_Text, 'Position', [15, 35, 100, 20]);          
-            app.xMax_Label = uicontrol(app.limits_Panel, 'Style', 'text', 'String', app.xMax_Label_Text, 'Position', [15, 85, 100, 20]); 
-            app.scans_Label = uicontrol(app.specta_Panel, 'Style', 'text', 'String', app.scans_Label_Text, 'Position', [15, 33, 100, 30]); 
-            app.int_Label = uicontrol(app.specta_Panel, 'Style', 'text', 'String', app.int_Label_Text, 'Position', [15, 91, 100, 30]); 
+            app.xMin_Label = uicontrol(app.limits_Panel, 'Style', 'text', 'String', app.xMin_Text, 'Position', [15, 35, 100, 20]);          
+            app.xMax_Label = uicontrol(app.limits_Panel, 'Style', 'text', 'String', app.xMax_Text, 'Position', [15, 85, 100, 20]); 
+            app.scans_Label = uicontrol(app.specta_Panel, 'Style', 'text', 'String', app.scans_Text, 'Position', [15, 33, 100, 30]); 
+            app.int_Label = uicontrol(app.specta_Panel, 'Style', 'text', 'String', app.int_Text, 'Position', [15, 91, 100, 30]); 
             app.dark_Sample = uicontrol(app.sample_Panel, 'Style', 'togglebutton', 'String', 'Dark Sample', 'Position', [15, 20, 100, 17], 'Callback', @app.dark_Spectra_Callback);
             app.pause = uicontrol(app.body, 'Style', 'togglebutton', 'String', 'Pause', 'Position', [15, 20, 100, 17], 'Callback', @app.pause_Callback);
             app.graph = axes('Parent', app.body, 'Position', [.07,.1,.75,.8], 'XLim', [app.xMin_Num, app.xMax_Num]);
