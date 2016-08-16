@@ -22,7 +22,6 @@ classdef Raman < spectra_Class
         greenText = 'Green (532)';      %The text labeling the Green button
         redText = 'Red (633)';          %The text labeling the Red button
         normalText = 'No Laser';        %The text labeling the Normal button
-        ramanShift;                     %The vector which will contain the Raman Shift wavelengths
         recentChange = 1;               %Bool keeps track if recent x axis change needs update. 
         
         x_Mes2 = 'Wavenumber';
@@ -44,8 +43,10 @@ classdef Raman < spectra_Class
             raman.dark_Spectrum = dark.back_Spectrum;
             
             while raman.keepGraphing == 1
+                if raman.halt == 0
                 ramanPlot(raman)
-                pause(.2)
+                end
+                pause(.1)
             end  
             
             
@@ -79,17 +80,16 @@ classdef Raman < spectra_Class
             plotSpectra(raman)
             
             if raman.cutoff ~= 0
-                raman.ramanShift = ((1/raman.cutoff) - 1./raman.wavelengths)*10^7;
-            else
-                raman.ramanShift = raman.wavelengths;
+                raman.wavelengths = ((1/raman.cutoff) - 1./raman.wavelengths)*10^7;
             end
             
             if raman.recentChange == 0
-                raman.xMin_Num = raman.ramanShift(1);
-                raman.xMax_Num = raman.ramanShift(legth(raman.ramanShift));
+                raman.recentChange = 1;
+                raman.xMin_Num = raman.wavelengths(1);
+                raman.xMax_Num = raman.wavelengths(length(raman.wavelenghts));
             end
                 
-            plot(raman.graph, raman.ramanShift, raman.spectrum)
+            plot(raman.graph, raman.wavelengths, raman.spectrum)
             xlim([raman.xMin_Num, raman.xMax_Num])
             xlabel(raman.x_Text)
             ylabel(raman.y_Text)

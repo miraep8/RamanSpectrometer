@@ -24,10 +24,7 @@ classdef Menu < handle
         
         
         picture                 %Stores the background picture for the Menu App
-        t_Icon                  %Stores the transmittion picture
-        a_Icon                  %Stores the Absorbance Picture
-        ra_Icon                 %Stores the Raman Picture
-        re_Icon                 %Stores the Reflected Icon
+
         
        
     end

@@ -26,7 +26,8 @@ classdef spectra_Class < handle
         sample_Panel            %The panel for the dark (and in subclasses) light sampling
         dark_Sample             %The toggle-button for the Dark background sample 
         pause                   %UIControl to pause graphing
-        stop                    %UIcontrol to stop graphing and exit program
+        close                    %UIcontrol to stop graphing and exit program
+        save
         
                         %Variables for Data Processing
         dark_Spectrum ;         %stores the electrical dark vector sample       
@@ -42,6 +43,7 @@ classdef spectra_Class < handle
         picture                 %holds the image that is put on the background
         keepGraphing = 1;       %keeps track of whether subclasses should keep updating. 
         halt = 0;
+        saved_Spectra;
         
                         %Beginning Strings
         xMin_Start               %the default X Min read at the beggining                        
@@ -97,6 +99,8 @@ classdef spectra_Class < handle
             app.int_Label = uicontrol(app.specta_Panel, 'Style', 'text', 'String', app.int_Text, 'Position', [15, 91, 100, 30]); 
             app.dark_Sample = uicontrol(app.sample_Panel, 'Style', 'togglebutton', 'String', 'Dark Sample', 'Position', [15, 20, 100, 17], 'Callback', @app.dark_Spectra_Callback);
             app.pause = uicontrol(app.body, 'Style', 'togglebutton', 'String', 'Pause', 'Position', [15, 20, 100, 17], 'Callback', @app.pause_Callback);
+            app.close = uicontrol(app.body, 'Style', 'pushbutton', 'String', 'Close', 'Position', [145, 20, 100, 17], 'Callback', @app.close_Callback);
+            app.save = uicontrol(app.body, 'Style', 'pushbutton', 'String', 'Save', 'Position', [275, 20, 100, 17], 'Callback', @app.save_Callback);
             app.graph = axes('Parent', app.body, 'Position', [.07,.1,.75,.8], 'XLim', [app.xMin_Num, app.xMax_Num]);
             
             uistack(app.graph, 'down')
@@ -139,6 +143,8 @@ classdef spectra_Class < handle
             
         end
         
+        %This function stop the program from graphing temporarily, freezing
+        %the latest spectra on the screen. 
         function pause_Callback(app, hObject, eventdata)
             
             pressed = get(hObject, 'Value');
@@ -149,6 +155,25 @@ classdef spectra_Class < handle
             end
             
         end
+        
+        %This function effectivly stops the program from running, and
+        %closes the figure. 
+        function close_Callback(app, hObject, eventdata)
+            
+            app.keepGraphing = 0;
+            close(app.body)
+            
+        end
+        
+        %this function allows the user to save the spectra currently being
+        %graphed, and will display it on the screen for the user to see and
+        %compare. 
+        function save_Callback(app, hObject, eventdata)
+            
+            
+            
+        end
+        
         
         %This is a generic plot function which does a few basic actions of
         %plotting.  Many of the subclasses overwride this to some degree,
