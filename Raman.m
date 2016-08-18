@@ -88,6 +88,13 @@ classdef Raman < spectra_Class
                 raman.xMin_Num = raman.wavelengths(1);
                 raman.xMax_Num = raman.wavelengths(length(raman.wavelengths));
             end
+            
+            if raman.saving == 1
+               
+                ramanSaving(raman)
+                
+            end
+                
                 
             plot(raman.graph, raman.wavelengths, raman.spectrum)
            
@@ -103,7 +110,21 @@ classdef Raman < spectra_Class
             xlabel(raman.x_Text)
             ylabel(raman.y_Text)
         end
+        
+        function ramanSaving(raman)
+            
+            raman.saving = 0;
+           
+            raman.saved_Waves = [raman.saved_Waves transpose(raman.wavelengths)];
+            
+            for k = 1:raman.num_Saved
+                dlmwrite(raman.filename, raman.saved_Waves(:, k), '-append', 'delimiter', ' ')
+            end
+            
+        end
     end
+    
+    
     
 end
 
