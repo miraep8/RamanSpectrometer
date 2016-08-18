@@ -37,8 +37,8 @@ classdef spectra_Class < handle
         dark_Bool = 0;          %records whether or not the program should be collecting dark samples
         scans_Num = 50;         %the number of scans to average the spectrometer should take
         int_Num = 1000;         %the integration time of the spectrometer in ms
-        xMin_Num         %the min x axis value displayed.
-        xMax_Num        %the max x axis value displayed
+        xMin_Num                %the min x axis value displayed.
+        xMax_Num                %the max x axis value displayed
         spectrum                %stores the latest spectrum from spectrometer
         wavelengths             %stores the latest wavelengths from the spectrometer
         picture                 %holds the image that is put on the background
@@ -184,6 +184,7 @@ classdef spectra_Class < handle
         function save_Callback(app, hObject, eventdata)
             
             app.saving = 1;           
+            app.num_Saved = app.num_Saved + 1;
             
         end
         
@@ -208,19 +209,24 @@ classdef spectra_Class < handle
                 time = datetime('now');
                 stamp = datestr(time);
                 newName = strcat(app.custom_Name, stamp);
-                              
                 
                 app.spectra_Names = [app.spectra_Names newName];
                 
                 names = app.spectra_Names;
                 data = app.saved_Spectra;
                 
+                sav = num2str(app.num_Saved);
+                scan = num2str(length(data(:,1)));
+                temp = strcar(sav, '/', scan, '\n');
+                header = sprintf(temp);
+                
                 fileID = fopen('mySpectras.txt', 'wt');
                 fprintf(fileID, names);
                 fclose(fileID);
                 
-                
-                dlmwrite('mySpectras.txt', data, '-append', 'delimiter', ' ')
+                for k = 1:app.num_Saved
+                          dlmwrite('mySpectras.txt', data(:, k), '-append', 'delimiter', ' ')
+                end
             end
             
 

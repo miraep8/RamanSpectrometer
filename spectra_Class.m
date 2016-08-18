@@ -208,19 +208,25 @@ classdef spectra_Class < handle
                 
                 time = datetime('now');
                 stamp = datestr(time);
-                newName = strcat(app.custom_Name, stamp);
-                              
+                newName = strcat(app.custom_Name, stamp, '~');
                 
-                app.spectra_Names = [app.spectra_Names newName];
+                app.spectra_Names = [app.spectra_Names, newName];
                 
                 names = app.spectra_Names;
                 data = app.saved_Spectra;
                 
+                sav = num2str(app.num_Saved);
+                scan = num2str(length(data(:,1)));
+                temp = strcat(sav, '/', scan, '\n');
+                header = sprintf(temp);
+                
                 fileID = fopen('mySpectras.txt', 'wt');
-                fprintf(fileID, names);
+                fprintf(fileID, header);
+                fprintf(fileID, '%s\n', names);
                 fclose(fileID);
                 
                 for k = 1:app.num_Saved
+                    
                           dlmwrite('mySpectras.txt', data(:, k), '-append', 'delimiter', ' ')
                 end
             end
