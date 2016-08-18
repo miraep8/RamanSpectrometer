@@ -7,6 +7,8 @@ classdef Analysis < handle
     
     properties
         myFile
+        names
+        spectras
     end
     
     methods
@@ -23,11 +25,21 @@ classdef Analysis < handle
             
            fileID = fopen(thinking.myFile);
            param = textscan(fileID, '%d', 2, 'Delimiter', '/');
+           nums = param{1, 1};
            
-           titles = textscan(fileID, '%[^~]', sav);
-           disp(titles);
+           sav = nums(1);
+           scan = nums(2);
            
-            
+           titles = textscan(fileID, '%s', sav, 'Delimiter', '~');
+           thinking.names = titles{1, 1};
+           
+           for k = 1:sav
+                   data = textscan(fileID, '%f', scan, 'Delimiter', sprintf('\n'));
+                   next = data{1,1};
+                   thinking.spectras = [thinking.spectras next];
+           end
+           
+          
         end
         
     end
