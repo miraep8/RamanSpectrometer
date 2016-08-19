@@ -7,7 +7,7 @@ classdef Raman < spectra_Class
     %   are taken to cancel out the background noise.
     
     % Author Mirae Parker
-    % Last Edit: 11.08.16
+    % Last Edit: 19.08.16
     
     properties
         

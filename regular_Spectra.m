@@ -8,6 +8,9 @@ classdef regular_Spectra < spectra_Class
     %   detector again, the only difference being the direction of the
     %   incident light. 
     
+    %Author: Mirae Parker
+    %Last Edit: 19.08.16
+    
     properties
         light_Spectrum
         light_Button

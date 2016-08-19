@@ -5,7 +5,7 @@ classdef spectra_Class < handle
     %   controlling the x limits and sizing the various components.
     
     %Author: Mirae Parker
-    %Last Edit: 11.08.16
+    %Last Edit: 19.08.16
 
     
     properties
@@ -36,8 +36,8 @@ classdef spectra_Class < handle
         dark_Size = 0;          %records how many spectra have been used to make the daks sample
         new_Dark = 1;           %tracks if it is the first dark-spectra
         dark_Bool = 0;          %records whether or not the program should be collecting dark samples
-        scans_Num = 2;         %the number of scans to average the spectrometer should take
-        int_Num = 100;         %the integration time of the spectrometer in ms
+        scans_Num = 2;          %the number of scans to average the spectrometer should take
+        int_Num = 100;          %the integration time of the spectrometer in ms
         xMin_Num                %the min x axis value displayed.
         xMax_Num                %the max x axis value displayed
         spectrum                %stores the latest spectrum from spectrometer
@@ -64,10 +64,10 @@ classdef spectra_Class < handle
         int_Text = 'Integration Time (ms)';      %label for int time
         light_Back = 'Images/light_background.png';    %address of light sampling backdrop image
         dark_Back = 'Images/dark_background.png';      %address of dark sampling backdrop image
-        x_Text = 'Wavelength (nm)';                    %label for the x axis
-        y_Text = 'Intensity';                          %label for the y axis
-        custom_Name = 'Sample Name';
-        filename = 'mySpectras.txt';
+        x_Text = 'Wavelength (nm)';               %label for the x axis
+        y_Text = 'Intensity';                     %label for the y axis
+        custom_Name = 'Sample Name';              %the default sample name
+        filename = 'mySpectras.txt';              %the default file name
         
         
     end
@@ -81,7 +81,7 @@ classdef spectra_Class < handle
             
             
             global NUM_SCANS
-            app.dark_Spectrum = zeros(1, NUM_SCANS);
+            app.dark_Spectrum = zeros(1, NUM_SCANS-1);
             app.saved_Spectra = zeros(1, NUM_SCANS-1);
             
             [~, xValues] = spectraWizard(app.scans_Num, app.int_Num);
@@ -112,7 +112,7 @@ classdef spectra_Class < handle
             app.save = uicontrol(app.body, 'Style', 'pushbutton', 'String', 'Save', 'Position', [275, 20, 100, 17], 'Callback', @app.save_Callback);
             app.graph = axes('Parent', app.body, 'Position', [.07,.1,.75,.8], 'XLim', [app.xMin_Num, app.xMax_Num]);
             app.custom_Text = uicontrol(app.body, 'Style', 'edit', 'Position', [1000, 70, 200, 20], 'String', app.custom_Name, 'Callback', @app.name_Callback);
-            app.delete = uicontrol(app.body, 'Style', 'popupmenu', 'Position', [1000, 100, 50, 20], 'String', 'Delete');
+            app.delete = uicontrol(app.body, 'Style', 'popupmenu', 'Position', [1000, 100, 50, 20], 'String', app.spectra_Names);
             
             
             uistack(app.graph, 'down')
@@ -250,6 +250,7 @@ classdef spectra_Class < handle
             
             dark = Backdrop_Sample(app.scans_Num, app.int_Num, app.xMin_Num, app.xMax_Num, app.dark_Back);
             app.dark_Spectrum = dark.back_Spectrum;
+            
         end
     end
 end

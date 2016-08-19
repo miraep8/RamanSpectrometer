@@ -1,11 +1,13 @@
 classdef Backdrop_Sample < handle
-    %Light_Sample is a sister GUI that pops up and collects a light
-    %background sample at the users bidding. 
-    %   It has a support function that allows for the user to retrieve the
-    %   spectrum collected, and update the sample backdrop privately. 
+    %Backdrop_Sample contains all of the functionality for collecting a
+    %background sample for reference, either a light, or dark sample, the
+    %collection requirements are the same.
+    %   The functionality is much like that of a pop-up window which
+    %   contains the current state of the spectrometer for reference and an
+    %   ability for the user to take a sample.
     
         %Author: Mirae Parker
-        %Last Edit: 11.08.16
+        %Last Edit: 19.08.16
 
     
     properties
@@ -31,7 +33,7 @@ classdef Backdrop_Sample < handle
         function sample = Backdrop_Sample (numScans, intTime, xMin, xMax, picName)
             
             global NUM_SCANS
-            sample.back_Spectrum = zeros(1, NUM_SCANS);
+            sample.back_Spectrum = zeros(1, NUM_SCANS-1);
            
             sample.body = figure('Position', [350, 160, 900, 550]);
             sample.background = axes('Parent', sample.body, 'Position', [0,0,1,1]);
@@ -75,6 +77,7 @@ classdef Backdrop_Sample < handle
         function closeThis(sample)
             
             close(sample.body)
+            
         end
 
         

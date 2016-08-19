@@ -4,6 +4,10 @@ classdef Analysis < handle
     %   The types of anaysis provided:
     
     
+    %Author: Mirae Parker
+    %Last Edit: 19.08.16
+    
+    
     
     properties
         

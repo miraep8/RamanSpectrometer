@@ -3,7 +3,7 @@
 %     it should be run at the beginning of every usage of the Raman GUI
 
     %Author: Mirae Parker
-    %Last Edit: 11.08.16
+    %Last Edit: 19.08.16
 
 
 %adds the path to the spectrometer file
@@ -17,8 +17,8 @@ global NUM_SCANS
 NUM_SCANS = length(spectrum);
 
 
-% %  FOR TESTING ONLY; PLEASE REMOVE
-% 
-% NUM_SCANS = 50;
+%  FOR TESTING ONLY; PLEASE REMOVE
+
+NUM_SCANS = 50;
 
 

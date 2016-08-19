@@ -3,15 +3,15 @@
 % integration time. 
  
     %Author: Mirae Parker
-    %Last Edit: 11.08.16
+    %Last Edit: 19.08.16
 
 
 function [spectra, wavelengths] = spectraWizard(scans, intTime)
 
-% %      FOR TESTING REMOVE
-% spectra = rand(1, 50)*randn;
-% wavelengths = (1:50) + 400;
-% return
+%      FOR TESTING REMOVE
+spectra = rand(1, 50)*randn;
+wavelengths = (1:50) + 400;
+return
 
 
 
