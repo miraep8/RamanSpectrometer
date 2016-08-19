@@ -40,9 +40,7 @@ classdef Analysis < handle
         
         function base_Callback (thinking, hObject, eventdata)
            
-            base = msbackadj(thinking.xaxis(thinking.num), thinking.spectras(thinking.num));
-            hold on 
-            plot(thinking.graph, thinking.xaxis(:,thinking.num), base)
+            base = msbackadi(thinking.
             
         end
         
