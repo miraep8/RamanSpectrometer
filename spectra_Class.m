@@ -29,6 +29,7 @@ classdef spectra_Class < handle
         close                   %UIcontrol to stop graphing and exit program
         save                    %Uicontrol for saving spectra. 
         custom_Text             %UI text box for custom Sample names.
+        delete
         
                         %Variables for Data Processing
         dark_Spectrum ;         %stores the electrical dark vector sample       
@@ -110,7 +111,9 @@ classdef spectra_Class < handle
             app.close = uicontrol(app.body, 'Style', 'pushbutton', 'String', 'Close', 'Position', [145, 20, 100, 17], 'Callback', @app.close_Callback);
             app.save = uicontrol(app.body, 'Style', 'pushbutton', 'String', 'Save', 'Position', [275, 20, 100, 17], 'Callback', @app.save_Callback);
             app.graph = axes('Parent', app.body, 'Position', [.07,.1,.75,.8], 'XLim', [app.xMin_Num, app.xMax_Num]);
-            app.custom_Text = uicontrol(app.body, 'Style', 'edit', 'Position', [15, 400, 200, 20], 'String', app.custom_Name, 'Callback', @app.name_Callback);
+            app.custom_Text = uicontrol(app.body, 'Style', 'edit', 'Position', [1000, 70, 200, 20], 'String', app.custom_Name, 'Callback', @app.name_Callback);
+            app.delete = uicontrol(app.body, 'Style', 'popupmenu', 'Position', [1000, 100, 50, 20], 'String', 'Delete');
+            
             
             uistack(app.graph, 'down')
             

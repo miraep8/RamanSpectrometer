@@ -49,7 +49,7 @@ classdef regular_Spectra < spectra_Class
         function lightPlot(reg)
             
             plotSpectra(reg)
-            reg.spectrum = reg.spectrum/((reg.light_Spectrum +3) -reg.dark_Spectrum);
+            reg.spectrum = reg.spectrum./((reg.light_Spectrum +3) - reg.dark_Spectrum);
             
             if reg.isAbs_Bool == 1
                 reg.spectrum = -log10(reg.spectrum);
