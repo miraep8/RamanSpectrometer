@@ -80,7 +80,7 @@ classdef spectra_Class < handle
             
             
             global NUM_SCANS
-            app.dark_Spectrum = zeros(1, NUM_SCANS-1);
+            app.dark_Spectrum = zeros(1, NUM_SCANS);
             app.saved_Spectra = zeros(1, NUM_SCANS-1);
             
             [~, xValues] = spectraWizard(app.scans_Num, app.int_Num);

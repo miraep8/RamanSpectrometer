@@ -31,10 +31,15 @@ classdef regular_Spectra < spectra_Class
             
             sample = Backdrop_Sample(reg.scans_Num, reg.int_Num, reg.xMin_Num, reg.xMax_Num, reg.light_Back);
             reg.light_Spectrum = sample.back_Spectrum;
+            dark = Backdrop_Sample(reg.scans_Num, reg.int_Num, reg.xMin_Num, reg.xMax_Num, reg.dark_Back);
+            reg.dark_Spectrum = dark.back_Spectrum;
             
             while reg.keepGraphing == 1
+                if reg.halt == 0
                 lightPlot(reg)
-            end
+                end
+                pause(.1)
+            end  
             
         end
         
@@ -44,16 +49,16 @@ classdef regular_Spectra < spectra_Class
         function lightPlot(reg)
             
             plotSpectra(reg)
-            reflected = reg.spectrum/(reg.light_Spectrum -reg.dark_Spectrum);
+            reg.spectrum = reg.spectrum/((reg.light_Spectrum +3) -reg.dark_Spectrum);
             
             if reg.isAbs_Bool == 1
-                reflected = -log10(reflected);
+                reg.spectrum = -log10(reg.spectrum);
             end
                 
-            plot(reg.graph, reg.wavelengths, reflected)
-            xlim([raman.xMin_Num, raman.xMax_Num])
-            xlabel(raman.x_Text)
-            ylabel(raman.y_Text)
+            plot(reg.graph, reg.wavelengths, reg.spectrum)
+            xlim([reg.xMin_Num, reg.xMax_Num])
+            xlabel(reg.x_Text)
+            ylabel(reg.y_Text)
             
         end
         
