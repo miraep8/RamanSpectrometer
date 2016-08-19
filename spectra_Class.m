@@ -35,8 +35,8 @@ classdef spectra_Class < handle
         dark_Size = 0;          %records how many spectra have been used to make the daks sample
         new_Dark = 1;           %tracks if it is the first dark-spectra
         dark_Bool = 0;          %records whether or not the program should be collecting dark samples
-        scans_Num = 50;         %the number of scans to average the spectrometer should take
-        int_Num = 1000;         %the integration time of the spectrometer in ms
+        scans_Num = 2;         %the number of scans to average the spectrometer should take
+        int_Num = 100;         %the integration time of the spectrometer in ms
         xMin_Num                %the min x axis value displayed.
         xMax_Num                %the max x axis value displayed
         spectrum                %stores the latest spectrum from spectrometer
@@ -53,8 +53,8 @@ classdef spectra_Class < handle
                         %Beginning Strings
         xMin_Start               %the default X Min read at the beggining                        
         xMax_Start               %the default X MAx read at the beginning
-        int_Start = '1000';      %the original int time text
-        scans_Start = '50';      %the original scans to average text
+        int_Start = '100';      %the original int time text
+        scans_Start = '2';      %the original scans to average text
         
                         %Labels for UIControls
         xMin_Text = 'X axis Min Value';          %label for XMin

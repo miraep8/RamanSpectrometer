@@ -114,7 +114,6 @@ classdef Raman < spectra_Class
         function ramanSaving(raman)
             
             raman.saving = 0;
-           
             raman.saved_Waves = [raman.saved_Waves transpose(raman.wavelengths)];
             
             for k = 1:raman.num_Saved

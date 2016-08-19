@@ -37,15 +37,7 @@ classdef Analysis < handle
         
         function list_Callback(thinking, hObject, eventdata)
             
-            graphNum = 2;
-            selected = get(hObject, 'Value');
-            for k = 1:thinking.sav
-                if strcmp(selected, thinking.names(k))
-                  graphNum = k;
-                  disp(selected)
-                end
-            end
-            
+            graphNum = get(hObject, 'Value');
             plot(thinking.graph, thinking.xaxis(:,graphNum), thinking.spectras(:,graphNum))
             xlim( [thinking.xaxis(graphNum), thinking.xaxis(length(thinking.xaxis))])
             
@@ -61,7 +53,7 @@ classdef Analysis < handle
            thinking.scan = nums(2);
            
            titles = textscan(fileID, '%s', thinking.sav, 'Delimiter', '~');
-           thinking.names = cell2mat(titles{1, 1});
+           thinking.names = char(titles{1, 1});
            
            textscan(fileID, '%[~]', 1);
            
