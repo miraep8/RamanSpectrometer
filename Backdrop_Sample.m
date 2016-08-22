@@ -30,9 +30,6 @@ classdef Backdrop_Sample < handle
     methods
         
         function sample = Backdrop_Sample (numScans, intTime, xMin, xMax)
-            
-            global NUM_SCANS
-            sample.back_Spectrum = zeros(1, NUM_SCANS-1);
            
             sample.body = figure('Position', [350, 160, 900, 550]);
             sample.background = axes('Parent', sample.body, 'Position', [0,0,1,1]);

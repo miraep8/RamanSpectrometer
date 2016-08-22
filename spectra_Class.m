@@ -79,11 +79,6 @@ classdef spectra_Class < handle
             %it is written in a way to make the graphics between all of
             %the programs fundamentally similar.
             
-            
-            global NUM_SCANS
-            app.dark_Spectrum = zeros(1, NUM_SCANS-1);
-            app.saved_Spectra = zeros(1, NUM_SCANS-1);
-            
             [~, xValues] = spectraWizard(app.scans_Num, app.int_Num);
             app.xMin_Num = xValues(1);
             app.xMax_Num = xValues(length(xValues));

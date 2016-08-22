@@ -17,8 +17,4 @@ global NUM_SCANS
 NUM_SCANS = length(spectrum);
 
 
-%  FOR TESTING ONLY; PLEASE REMOVE
-
-NUM_SCANS = 50;
-
 

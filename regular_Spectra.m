@@ -25,9 +25,6 @@ classdef regular_Spectra < spectra_Class
             
             reg.isAbs_Bool = isAbs;
             
-            global NUM_SCANS
-            reg.light_Spectrum = zeros(1, NUM_SCANS -1);
-            
             reg.sample_Panel = uipanel(reg.body, 'Title', 'Background Sampling', 'Position', [.85, .37, .1, .12]);
             reg.light_Button = uicontrol(reg.sample_Panel, 'Style', 'togglebutton', 'String', 'Light Sample', 'Position', [15, 40, 100, 17], 'Callback', @reg.light_Spectra_Callback);
             reg.dark_Sample = uicontrol(reg.sample_Panel, 'Style', 'togglebutton', 'String', 'Dark Sample', 'Position', [15, 12, 100, 17], 'Callback', @reg.dark_Spectra_Callback);
