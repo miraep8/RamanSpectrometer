@@ -13,7 +13,6 @@ classdef Backdrop_Sample < handle
     properties
         body
         background
-        picture
         graph
         back_Sample                %Button for taking a light sample. 
         
@@ -30,16 +29,13 @@ classdef Backdrop_Sample < handle
     
     methods
         
-        function sample = Backdrop_Sample (numScans, intTime, xMin, xMax, picName)
+        function sample = Backdrop_Sample (numScans, intTime, xMin, xMax)
             
             global NUM_SCANS
             sample.back_Spectrum = zeros(1, NUM_SCANS-1);
            
             sample.body = figure('Position', [350, 160, 900, 550]);
             sample.background = axes('Parent', sample.body, 'Position', [0,0,1,1]);
-            sample.picture = imread(picName);
-            image(sample.background, sample.picture)
-            axis off
             
             sample.back_Sample = uicontrol(sample.body, 'Style', 'togglebutton', 'String', 'Take Sample', 'Position', [15, 20, 200, 17], 'Callback', @sample.takeSample_Callback);
             
