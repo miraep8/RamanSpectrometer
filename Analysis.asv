@@ -65,16 +65,11 @@ classdef Analysis < handle
                 end    
             end
             
-            C = zeros(thinking.xDim, thinking.yDim);
-            temp = zeros(1, thinking.yDim);
-            for k = 1:thinking.xDim
-                for s = 1:thinking.yDim
-                temp(s) = thinking.spectras(index, ((k-1)*thinking.yDim + s));
-                end
-                C(k, :) = (temp);
+            C = zeros(1, thinking.xDim*thinking.);
+            for k = 1:x*y
+                C(k) = thinking.spectras(index, k);
             end
             
-            colormap hsv
             imagesc(thinking.graph, x, y, C)
             
         end

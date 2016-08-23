@@ -21,6 +21,7 @@ classdef Raman < spectra_Class
         yDim_Text               %editable text to change y dimension in the scanning range.
         xDim_Label              %label for the xDim
         yDim_Label              %label for the yDim
+        save                    %Uicontrol for saving spectra. 
         
                    %Variables for data manipulation
         cutoff = 0;                     %Orginally cutoff is at 0, regualar spectrum         
@@ -49,10 +50,12 @@ classdef Raman < spectra_Class
             raman.redLight_633 = uicontrol(raman.radio_Panel, 'Style', 'radiobutton', 'String', raman.redText, 'Position', [12, 35, 140, 15], 'Callback', @raman.red_Callback);
             dark = Backdrop_Sample(raman.scans_Num, raman.int_Num, raman.xMin_Num, raman.xMax_Num);
             raman.dark_Spectrum = dark.back_Spectrum;
-            raman.imaging2D_Panel = uipanel(raman.body, 'Title', 'Dimensions of 2D image', 'Position', [.90, .12, .12, .1]);
-            raman.xDim_Text = uicontrol(raman.imaging2D_Panel, 'Style', 'edit', 'Position', [12, 10, 50, 20], 'String', num2str(raman.xDim), 'Callback', @raman.xDim_Callback);
-            raman.yDim_Text = uicontrol(raman.imaging2D_Panel, 'Style', 'edit', 'Position', [12, 40, 50, 20], 'String', num2str(raman.yDim), 'Callback', @raman.yDim_Callback);
-            raman.
+            raman.imaging2D_Panel = uipanel(raman.body, 'Title', 'Dimensions of 2D image', 'Position', [.85, .4, .1, .1]);
+            raman.xDim_Text = uicontrol(raman.imaging2D_Panel, 'Style', 'edit', 'Position', [62, 10, 50, 20], 'String', num2str(raman.xDim), 'Callback', @raman.xDim_Callback);
+            raman.yDim_Text = uicontrol(raman.imaging2D_Panel, 'Style', 'edit', 'Position', [62, 40, 50, 20], 'String', num2str(raman.yDim), 'Callback', @raman.yDim_Callback);
+            raman.xDim_Label = uicontrol(raman.imaging2D_Panel, 'Style', 'text', 'Position', [12, 40, 50, 20], 'String', 'X Dim:');
+            raman.yDim_Label = uicontrol(raman.imaging2D_Panel, 'Style', 'text', 'Position', [12, 10, 50, 20], 'String', 'Y Dim:');
+              app.save = uicontrol(app.body, 'Style', 'pushbutton', 'String', 'Save', 'Position', [275, 20, 100, 17], 'Callback', @app.save_Callback);
             
             while raman.keepGraphing == 1
                 if raman.halt == 0
@@ -91,6 +94,7 @@ classdef Raman < spectra_Class
    
             plotSpectra(raman)
             
+            
             if raman.cutoff ~= 0
                 raman.wavelengths = ((1/raman.cutoff) - 1./raman.wavelengths)*10^7;
             end
@@ -109,18 +113,31 @@ classdef Raman < spectra_Class
                 
                 
             plot(raman.graph, raman.wavelengths, raman.spectrum)
-           
+            
             hold on
             [~, n] = size(raman.saved_Spectra);
             for k = 1:n
-               plot(raman.graph, raman.wavelengths, raman.saved_Spectra(:, k)) 
+                plot(raman.graph, raman.wavelengths, raman.saved_Spectra(:, k))
             end
             
-            hold off    
+            hold off
             
             xlim([raman.xMin_Num, raman.xMax_Num])
             xlabel(raman.x_Text)
             ylabel(raman.y_Text)
+            
+        end
+        
+        function xDim_Callback(raman, hObject, eventdata)
+            
+            raman.xDim = str2double(get(hObject, 'String'));
+            
+        end
+        
+        function yDim_Callback(raman, hObject, eventdata)
+            
+            raman.yDim = str2double(get(hObject, 'String'));
+            
         end
         
         function ramanSaving(raman)
@@ -132,10 +149,55 @@ classdef Raman < spectra_Class
                 dlmwrite(raman.filename, raman.saved_Waves(:, k), '-append', 'delimiter', ' ')
             end
             
+            x = num2str(raman.xDim);
+            y = num2str(raman.yDim);
+            temp = strcat(x, '/', y, '\n');
+            footer = sprintf(temp);
+            
+            fileID = fopen(raman.filename, 'a');
+            fprintf(fileID, footer);
+            fclose(fileID);
+            
         end
+        
+        function save_Callback(raman, hObject, eventdata)
+            
+            raman.saving = raman.xDim*raman.yDim;
+            raman.num_Saved = raman.num_Saved + raman.saving;
+            
+        end
+        
+        
+        
+        function saveHelp(raman)
+            
+            raman.saved_Spectra = [raman.saved_Spectra transpose(raman.spectrum)];
+            
+            time = datetime('now');
+            stamp = datestr(time);
+            newName = strcat(raman.custom_Name, stamp, '~');
+            
+            raman.spectra_Names = [raman.spectra_Names, newName];
+            
+            names = raman.spectra_Names;
+            data = raman.saved_Spectra;
+            
+            sav = num2str(raman.num_Saved);
+            scan = num2str(length(data(:,1)));
+            temp = strcat(sav, '/', scan, '\n');
+            header = sprintf(temp);
+            
+            fileID = fopen(raman.filename, 'wt');
+            fprintf(fileID, header);
+            fprintf(fileID, '%s', names);
+            fclose(fileID);
+            
+            for k = 1:raman.num_Saved
+                dlmwrite(raman.filename, data(:, k), '-append', 'delimiter', ' ')
+            end
+        end
+        
     end
-    
-    
-    
 end
+
 
