@@ -49,7 +49,7 @@ classdef Raman < spectra_Class
             raman.normal_Spectrum = uicontrol(raman.radio_Panel, 'Style', 'radiobutton', 'String', raman.normalText, 'Position', [12, 60, 140, 15], 'Callback', @raman.normal_Callback);
             raman.greenLight_532 = uicontrol(raman.radio_Panel, 'Style', 'radiobutton', 'String', raman.greenText, 'Position', [12, 10, 140, 15], 'Callback', @raman.green_Callback);
             raman.redLight_633 = uicontrol(raman.radio_Panel, 'Style', 'radiobutton', 'String', raman.redText, 'Position', [12, 35, 140, 15], 'Callback', @raman.red_Callback);
-            dark = Backdrop_Sample(raman.scans_Num, raman.int_Num, raman.xMin_Num, raman.xMax_Num);
+            dark = Backdrop_Sample(raman.scans_Num, raman.int_Num, raman.xMin_Num, raman.xMax_Num, raman.index);
             raman.dark_Spectrum = dark.back_Spectrum;
             raman.imaging2D_Panel = uipanel(raman.body, 'Title', 'Dimensions of 2D image', 'Position', [.85, .4, .1, .1]);
             raman.xDim_Text = uicontrol(raman.imaging2D_Panel, 'Style', 'edit', 'Position', [62, 10, 50, 20], 'String', num2str(raman.xDim), 'Callback', @raman.xDim_Callback);

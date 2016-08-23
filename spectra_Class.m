@@ -77,7 +77,7 @@ classdef spectra_Class < handle
             %it is written in a way to make the graphics between all of
             %the programs fundamentally similar.
             
-            [~, xValues] = spectraWizard(app.scans_Num, app.int_Num);
+            [~, xValues] = spectraWizard(app.scans_Num, app.int_Num, app.index);
             app.xMin_Num = xValues(1);
             app.xMax_Num = xValues(length(xValues));
             app.xMax_Start = num2str(app.xMax_Num); 

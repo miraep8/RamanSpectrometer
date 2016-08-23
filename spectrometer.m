@@ -11,6 +11,8 @@ javaaddpath('C:\Program Files\Ocean Optics\OmniDriver\OOI_HOME\OmniDriver.jar');
 wrapper = com.oceanoptics.omnidriver.api.wrapper.Wrapper();
 wrapper.openAllSpectrometers();
 
+spectrum = wrapper.getSpectrum(0);
+
 %the length of the original scan sets the length of all the other vectors.
 global NUM_SCANS
 NUM_SCANS = length(spectrum);

@@ -23,13 +23,14 @@ classdef Backdrop_Sample < handle
         int
         min
         max
+        index
         
         
     end
     
     methods
         
-        function sample = Backdrop_Sample (numScans, intTime, xMin, xMax)
+        function sample = Backdrop_Sample (numScans, intTime, xMin, xMax, specIndex)
            
             sample.body = figure('Position', [350, 160, 900, 550]);
             sample.background = axes('Parent', sample.body, 'Position', [0,0,1,1]);
@@ -40,6 +41,7 @@ classdef Backdrop_Sample < handle
             sample.int = intTime;
             sample.min = xMin;
             sample.max = xMax;
+            sample.index = specIndex;
             
             sample.graph = axes('Parent', sample.body, 'Position', [.07,.1,.75,.8], 'XLim', [sample.min, sample.max]);
 
@@ -59,7 +61,7 @@ classdef Backdrop_Sample < handle
         
         function backPlot(sample)
            
-            [sample.back_Spectrum, wavelengths] = spectraWizard(sample.scans, sample.int);
+            [sample.back_Spectrum, wavelengths] = spectraWizard(sample.scans, sample.int, sample.index);
             plot(sample.graph, wavelengths, sample.back_Spectrum)
             xlim([sample.min, sample.max])
             
