@@ -28,7 +28,8 @@ classdef Raman < spectra_Class
         greenText = 'Green (532)';      %The text labeling the Green button
         redText = 'Red (633)';          %The text labeling the Red button
         normalText = 'No Laser';        %The text labeling the Normal button
-        recentChange = 1;               %Bool keeps track if recent x axis change needs update. 
+        recentChange = 1;               %Bool keeps track if recent x axis change needs update.
+        saving = 0;
         
         x_Mes2 = 'Wavenumber';
         x_Mes1 = 'Wavelength (nm)';
@@ -55,7 +56,7 @@ classdef Raman < spectra_Class
             raman.yDim_Text = uicontrol(raman.imaging2D_Panel, 'Style', 'edit', 'Position', [62, 40, 50, 20], 'String', num2str(raman.yDim), 'Callback', @raman.yDim_Callback);
             raman.xDim_Label = uicontrol(raman.imaging2D_Panel, 'Style', 'text', 'Position', [12, 40, 50, 20], 'String', 'X Dim:');
             raman.yDim_Label = uicontrol(raman.imaging2D_Panel, 'Style', 'text', 'Position', [12, 10, 50, 20], 'String', 'Y Dim:');
-              app.save = uicontrol(app.body, 'Style', 'pushbutton', 'String', 'Save', 'Position', [275, 20, 100, 17], 'Callback', @app.save_Callback);
+            raman.save = uicontrol(raman.body, 'Style', 'pushbutton', 'String', 'Save', 'Position', [275, 20, 100, 17], 'Callback', @raman.save_Callback);
             
             while raman.keepGraphing == 1
                 if raman.halt == 0
@@ -94,7 +95,6 @@ classdef Raman < spectra_Class
    
             plotSpectra(raman)
             
-            
             if raman.cutoff ~= 0
                 raman.wavelengths = ((1/raman.cutoff) - 1./raman.wavelengths)*10^7;
             end
@@ -104,24 +104,17 @@ classdef Raman < spectra_Class
                 raman.xMin_Num = raman.wavelengths(1);
                 raman.xMax_Num = raman.wavelengths(length(raman.wavelengths));
             end
+                
             
-            if raman.saving == 1
-               
-                ramanSaving(raman)
-                
+            if raman.saving >= 1
+                saveHelp(raman)
             end
-                
+            
+            
+            
                 
             plot(raman.graph, raman.wavelengths, raman.spectrum)
-            
-            hold on
-            [~, n] = size(raman.saved_Spectra);
-            for k = 1:n
-                plot(raman.graph, raman.wavelengths, raman.saved_Spectra(:, k))
-            end
-            
-            hold off
-            
+         
             xlim([raman.xMin_Num, raman.xMax_Num])
             xlabel(raman.x_Text)
             ylabel(raman.y_Text)
@@ -139,37 +132,20 @@ classdef Raman < spectra_Class
             raman.yDim = str2double(get(hObject, 'String'));
             
         end
-        
-        function ramanSaving(raman)
-            
-            raman.saving = 0;
-            raman.saved_Waves = [raman.saved_Waves transpose(raman.wavelengths)];
-            
-            for k = 1:raman.num_Saved
-                dlmwrite(raman.filename, raman.saved_Waves(:, k), '-append', 'delimiter', ' ')
-            end
-            
-            x = num2str(raman.xDim);
-            y = num2str(raman.yDim);
-            temp = strcat(x, '/', y, '\n');
-            footer = sprintf(temp);
-            
-            fileID = fopen(raman.filename, 'a');
-            fprintf(fileID, footer);
-            fclose(fileID);
-            
-        end
+
         
         function save_Callback(raman, hObject, eventdata)
             
             raman.saving = raman.xDim*raman.yDim;
-            raman.num_Saved = raman.num_Saved + raman.saving;
             
         end
         
         
         
         function saveHelp(raman)
+            
+            raman.saving = raman.saving-1;
+            raman.num_Saved = raman.num_Saved + 1;
             
             raman.saved_Spectra = [raman.saved_Spectra transpose(raman.spectrum)];
             
@@ -195,6 +171,20 @@ classdef Raman < spectra_Class
             for k = 1:raman.num_Saved
                 dlmwrite(raman.filename, data(:, k), '-append', 'delimiter', ' ')
             end
+            raman.saved_Waves = [raman.saved_Waves transpose(raman.wavelengths)];
+            
+            for k = 1:raman.num_Saved
+                dlmwrite(raman.filename, raman.saved_Waves(:, k), '-append', 'delimiter', ' ')
+            end
+            
+            x = num2str(raman.xDim);
+            y = num2str(raman.yDim);
+            temp = strcat(x, '/', y, '\n');
+            footer = sprintf(temp);
+            
+            fileID = fopen(raman.filename, 'a');
+            fprintf(fileID, footer);
+            fclose(fileID);
         end
         
     end

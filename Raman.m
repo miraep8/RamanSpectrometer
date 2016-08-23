@@ -95,13 +95,6 @@ classdef Raman < spectra_Class
    
             plotSpectra(raman)
             
-            if raman.saving >= 1
-                saveHelp(raman)
-            else
-                plot(raman.graph, raman.wavelengths, raman.spectrum)
-            end
-            
-            
             if raman.cutoff ~= 0
                 raman.wavelengths = ((1/raman.cutoff) - 1./raman.wavelengths)*10^7;
             end
@@ -112,21 +105,16 @@ classdef Raman < spectra_Class
                 raman.xMax_Num = raman.wavelengths(length(raman.wavelengths));
             end
                 
+            
+            if raman.saving >= 1
+                saveHelp(raman)
+            else
+                plot(raman.graph, raman.wavelengths, raman.spectrum)
                 
-%             plot(raman.graph, raman.wavelengths, raman.spectrum)
-%             
-%             hold on
-%             [~, n] = size(raman.saved_Spectra);
-%             for k = 1:n
-%                 plot(raman.graph, raman.wavelengths, raman.saved_Spectra(:, k))
-%             end
-%             
-%             hold off
-            
-            xlim([raman.xMin_Num, raman.xMax_Num])
-            xlabel(raman.x_Text)
-            ylabel(raman.y_Text)
-            
+                xlim([raman.xMin_Num, raman.xMax_Num])
+                xlabel(raman.x_Text)
+                ylabel(raman.y_Text)
+            end
         end
         
         function xDim_Callback(raman, hObject, eventdata)
@@ -145,9 +133,6 @@ classdef Raman < spectra_Class
         function save_Callback(raman, hObject, eventdata)
             
             raman.saving = raman.xDim*raman.yDim;
-            
-                picture = imread('Images\light_background.png');
-                image(raman.graph, picture);
             
         end
         
