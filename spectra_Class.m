@@ -56,8 +56,6 @@ classdef spectra_Class < handle
                         %Beginning Strings
         xMin_Start               %the default X Min read at the beggining                        
         xMax_Start               %the default X MAx read at the beginning
-        int_Start = '100';      %the original int time text
-        scans_Start = '2';      %the original scans to average text
         
                         %Labels for UIControls
         xMin_Text = 'X axis Min Value';          %label for XMin
@@ -87,31 +85,31 @@ classdef spectra_Class < handle
             app.xMax_Start = num2str(app.xMax_Num); 
             app.xMin_Start = num2str(app.xMin_Num);
             
-            app.body = figure('Position', [100, 50, 1300, 700]);
+            app.body = figure('Position', [0, 20, 1600, 800]);
             app.background = axes('Parent', app.body, 'Position', [0,0,1,1]);
             app.picture = imread('Images/app_background.jpg');
             image(app.background, app.picture)
             axis off
-            app.limits_Panel = uipanel( app.body, 'Title', 'Control X Axis', 'Position', [.85,.55 ,.1,.185]);
-            app.specta_Panel = uipanel(app.body, 'Title', 'Spectrum Sampling', 'Position', [.85, .77, .1, .2]);
-            app.sample_Panel = uipanel(app.body, 'Title', 'Background Sampling', 'Position', [.85, .37, .1, .09]);
+            app.limits_Panel = uipanel( app.body, 'Title', 'Control X Axis', 'Position', [.85,.63 ,.1,.155]);
+            app.specta_Panel = uipanel(app.body, 'Title', 'Spectrum Sampling', 'Position', [.85, .8, .1, .17]);
+            app.sample_Panel = uipanel(app.body, 'Title', 'Background Sampling', 'Position', [.85, .52, .1, .09]);
             app.xMin = uicontrol(app.limits_Panel, 'Style', 'edit', 'Position', [15, 10, 100, 20], 'String', app.xMin_Start, 'Callback', @app.xMin_Callback); 
             app.xMax = uicontrol(app.limits_Panel, 'Style', 'edit', 'Position', [15, 60, 100, 20], 'String', app.xMax_Start, 'Callback', @app.xMax_Callback);
-            app.scans = uicontrol(app.specta_Panel, 'Style', 'edit', 'Position', [15, 10, 100, 20], 'String', app.scans_Start, 'Callback', @app.scans_Callback); 
-            app.integration = uicontrol(app.specta_Panel, 'Style', 'edit', 'Position', [15, 67, 100, 20], 'String', app.int_Start, 'Callback', @app.int_Callback);
+            app.scans = uicontrol(app.specta_Panel, 'Style', 'edit', 'Position', [15, 10, 100, 20], 'String', num2str(app.scans_Num), 'Callback', @app.scans_Callback); 
+            app.integration = uicontrol(app.specta_Panel, 'Style', 'edit', 'Position', [15, 67, 100, 20], 'String', num2str(app.int_Num), 'Callback', @app.int_Callback);
             app.xMin_Label = uicontrol(app.limits_Panel, 'Style', 'text', 'String', app.xMin_Text, 'Position', [15, 35, 100, 20]);          
             app.xMax_Label = uicontrol(app.limits_Panel, 'Style', 'text', 'String', app.xMax_Text, 'Position', [15, 85, 100, 20]); 
             app.scans_Label = uicontrol(app.specta_Panel, 'Style', 'text', 'String', app.scans_Text, 'Position', [15, 33, 100, 30]); 
-            app.int_Label = uicontrol(app.specta_Panel, 'Style', 'text', 'String', app.int_Text, 'Position', [15, 91, 100, 30]); 
+            app.int_Label = uicontrol(app.specta_Panel, 'Style', 'text', 'String', app.int_Text, 'Position', [15, 88, 100, 20]); 
             app.dark_Sample = uicontrol(app.sample_Panel, 'Style', 'togglebutton', 'String', 'Dark Sample', 'Position', [15, 20, 100, 17], 'Callback', @app.dark_Spectra_Callback);
             app.pause = uicontrol(app.body, 'Style', 'togglebutton', 'String', 'Pause', 'Position', [15, 20, 100, 17], 'Callback', @app.pause_Callback);
             app.close = uicontrol(app.body, 'Style', 'pushbutton', 'String', 'Close', 'Position', [145, 20, 100, 17], 'Callback', @app.close_Callback);
             app.save = uicontrol(app.body, 'Style', 'pushbutton', 'String', 'Save', 'Position', [275, 20, 100, 17], 'Callback', @app.save_Callback);
             app.graph = axes('Parent', app.body, 'Position', [.07,.1,.75,.8], 'XLim', [app.xMin_Num, app.xMax_Num]);
-            app.custom_Text = uicontrol(app.body, 'Style', 'edit', 'Position', [1000, 70, 200, 20], 'String', app.custom_Name, 'Callback', @app.name_Callback);
+            app.custom_Text = uicontrol(app.body, 'Style', 'edit', 'Position', [1070, 70, 200, 20], 'String', app.custom_Name, 'Callback', @app.name_Callback);
             app.delete = uicontrol(app.body, 'Style', 'popupmenu', 'Position', [1000, 100, 50, 20], 'String', app.spectra_Names);
-            spectStrings = ['Green Spectrometer (75)', 'Red Spectrometer (65)'];
-            app.spectIndex = uicontrol(app.body, 'Style', 'listbox', 'Position', [1000, 300, 150, 50], 'String', spectStrings, 'Callback', @app.index_Callback);
+            spectStrings = {'Green Spectrometer (75)'; 'Red Spectrometer (65)'};
+            app.spectIndex = uicontrol(app.body, 'Style', 'listbox', 'Position', [1100, 100, 150, 30], 'String', spectStrings, 'Callback', @app.index_Callback);
             
             uistack(app.graph, 'down')
             

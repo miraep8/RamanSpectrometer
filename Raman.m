@@ -16,6 +16,11 @@ classdef Raman < spectra_Class
         redLight_633            %the Radio-Button that indicates Red Raman
         normal_Spectrum         %the Radio Button that indicates normal spectrum
         radio_Panel             %the panel which contains all the radiobuttons
+        imaging2D_Panel         %the panel which allopws the user to seelect size of Raman imaging
+        xDim_Text               %editable text to change x dimension in the scanning range
+        yDim_Text               %editable text to change y dimension in the scanning range.
+        xDim_Label              %label for the xDim
+        yDim_Label              %label for the yDim
         
                    %Variables for data manipulation
         cutoff = 0;                     %Orginally cutoff is at 0, regualar spectrum         
@@ -26,6 +31,9 @@ classdef Raman < spectra_Class
         
         x_Mes2 = 'Wavenumber';
         x_Mes1 = 'Wavelength (nm)';
+        
+        xDim = 1;
+        yDim = 1;
         
     end, 
     
@@ -41,6 +49,11 @@ classdef Raman < spectra_Class
             raman.redLight_633 = uicontrol(raman.radio_Panel, 'Style', 'radiobutton', 'String', raman.redText, 'Position', [12, 35, 140, 15], 'Callback', @raman.red_Callback);
             dark = Backdrop_Sample(raman.scans_Num, raman.int_Num, raman.xMin_Num, raman.xMax_Num);
             raman.dark_Spectrum = dark.back_Spectrum;
+            raman.imaging2D_Panel = uipanel(raman.body, 'Title', 'Dimensions of 2D image', 'Position', [.85, .4, .1, .1]);
+            raman.xDim_Text = uicontrol(raman.imaging2D_Panel, 'Style', 'edit', 'Position', [62, 10, 50, 20], 'String', num2str(raman.xDim), 'Callback', @raman.xDim_Callback);
+            raman.yDim_Text = uicontrol(raman.imaging2D_Panel, 'Style', 'edit', 'Position', [62, 40, 50, 20], 'String', num2str(raman.yDim), 'Callback', @raman.yDim_Callback);
+            raman.xDim_Label = uicontrol(raman.imaging2D_Panel, 'Style', 'text', 'Position', [12, 40, 50, 20], 'String', 'X Dim:');
+            raman.yDim_Label = uicontrol(raman.imaging2D_Panel, 'Style', 'text', 'Position', [12, 10, 50, 20], 'String', 'Y Dim:');
             
             while raman.keepGraphing == 1
                 if raman.halt == 0
