@@ -91,7 +91,7 @@ classdef Analysis < handle
             
             thinking.num = get(hObject, 'Value');
             plot(thinking.graph, thinking.xaxis(:,thinking.num), thinking.spectras(:,thinking.num))
-            xlim( [thinking.xaxis(thinking.num), thinking.xaxis(length(thinking.xaxis))])
+            %xlim( [thinking.xaxis(thinking.num, 1), thinking.xaxis(thinking.num,length(thinking.xaxis(thinking.num,:)))])
             
         end
         
@@ -109,24 +109,32 @@ classdef Analysis < handle
            
            textscan(fileID, '%[~]', 1);
            
-           for k = 1:thinking.sav
-                   data = textscan(fileID, '%f', thinking.scan, 'Delimiter', sprintf('\n'));
+           for k = 1:thinking.scan
+                   data = textscan(fileID, '%f', thinking.sav, 'Delimiter', ' ');
                    next = data{1, 1};
                    thinking.spectras = [thinking.spectras next];
            end
-           for k = 1:thinking.sav
-                   data = textscan(fileID, '%f', thinking.scan, 'Delimiter', sprintf('\n'));
+           for k = 1:thinking.scan
+                   data = textscan(fileID, '%f', thinking.sav, 'Delimiter', ' ');
                    next = data{1, 1};
                    thinking.xaxis = [thinking.xaxis next];
            end
+           
+           thinking.xaxis = transpose(thinking.xaxis);
+           thinking.spectras = transpose(thinking.spectras);
            
            param = textscan(fileID, '%d', 2, 'Delimiter', '/');
            data = param{1, 1};
            
            thinking.xDim = data(1);
            thinking.yDim = data(2);
+           
+           
+        disp(thinking.xaxis)
+        disp(thinking.spectras)
           
         end
+        
         
     end
     

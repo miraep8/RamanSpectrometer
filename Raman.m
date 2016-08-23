@@ -164,14 +164,12 @@ classdef Raman < spectra_Class
             fprintf(fileID, '%s', names);
             fclose(fileID);
             
-            for k = 1:raman.num_Saved
-                dlmwrite(raman.filename, data(:, k), '-append', 'delimiter', ' ')
-            end
-            raman.saved_Waves = [raman.saved_Waves transpose(raman.wavelengths)];
+            dlmwrite(raman.filename, data, '-append', 'delimiter', ' ')
             
-            for k = 1:raman.num_Saved
-                dlmwrite(raman.filename, raman.saved_Waves(:, k), '-append', 'delimiter', ' ')
-            end
+            raman.saved_Waves = [raman.saved_Waves transpose(raman.wavelengths)];
+                        
+            dlmwrite(raman.filename, raman.saved_Waves, '-append', 'delimiter', ' ')
+
             
             x = num2str(raman.xDim);
             y = num2str(raman.yDim);
