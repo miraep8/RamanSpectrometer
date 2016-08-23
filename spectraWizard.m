@@ -6,12 +6,12 @@
     %Last Edit: 19.08.16
 
 
-function [spectra, wavelengths] = spectraWizard(scans, intTime)
-% 
-%  %    FOR TESTING REMOVE
-% spectra = rand(1, 50)*randn;
-% wavelengths = (1:50) + 400;
-% return
+function [spectra, wavelengths] = spectraWizard(scans, intTime, index)
+
+ %    FOR TESTING REMOVE
+spectra = rand(1, 50)*randn;
+wavelengths = (1:50) + 400;
+return
 
 
 
@@ -19,12 +19,12 @@ function [spectra, wavelengths] = spectraWizard(scans, intTime)
 spectrometer
 
 % set the integration time, in microseconds
-wrapper.setIntegrationTime(0, intTime);
+wrapper.setIntegrationTime(index, intTime);
 
 
 %collect a matrix containing as many scans as specified
 for i = 1:scans
-  spectrum(:,i) = wrapper.getSpectrum(0);
+  spectrum(:,i) = wrapper.getSpectrum(index);
 end
 
 %this variable is shared between all of the programs, and insures that all
@@ -45,5 +45,5 @@ end
 
 %returns the spectra and wavelengths accumulated
 spectra = average(2:end);
-waves = wrapper.getWavelengths(0);
+waves = wrapper.getWavelengths(index);
 wavelengths = waves(2:end);

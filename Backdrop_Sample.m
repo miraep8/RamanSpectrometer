@@ -53,8 +53,6 @@ classdef Backdrop_Sample < handle
         end
         
         function takeSample_Callback(sample, hObject, eventdata)
-            
-           [sample.back_Spectrum, waves] = spectraWizard(sample.scans*sample.factor, sample.int);
             sample.keepGraphing = 0;
             
         end
