@@ -105,16 +105,16 @@ classdef Raman < spectra_Class
                 raman.xMax_Num = raman.wavelengths(length(raman.wavelengths));
             end
                 
-            
             if raman.saving >= 1
                 saveHelp(raman)
             else
-                plot(raman.graph, raman.wavelengths, raman.spectrum)
-                
-                xlim([raman.xMin_Num, raman.xMax_Num])
-                xlabel(raman.x_Text)
-                ylabel(raman.y_Text)
+            plot(raman.graph, raman.wavelengths, raman.spectrum)
+            
+            xlim([raman.xMin_Num, raman.xMax_Num])
+            xlabel(raman.x_Text)
+            ylabel(raman.y_Text)
             end
+            
         end
         
         function xDim_Callback(raman, hObject, eventdata)
@@ -144,7 +144,7 @@ classdef Raman < spectra_Class
             raman.num_Saved = raman.num_Saved + 1;
             
             raman.saved_Spectra = [raman.saved_Spectra transpose(raman.spectrum)];
-            
+
             time = datetime('now');
             stamp = datestr(time);
             newName = strcat(raman.custom_Name, stamp, '~');

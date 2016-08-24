@@ -8,10 +8,10 @@
 
 function [spectra, wavelengths] = spectraWizard(scans, intTime, index)
 
-  %  FOR TESTING REMOVE
-spectra = rand(1, 50)*randn;
-wavelengths = (1:50) + 400;
-return
+%  %  FOR TESTING REMOVE
+% spectra = rand(1, 50)*randn;
+% wavelengths = (1:50) + 400;
+% return
 
 
 

@@ -103,35 +103,39 @@ classdef Analysis < handle
            
            thinking.sav = data(1);
            thinking.scan = data(2);
+           disp(data)
            
            titles = textscan(fileID, '%s', thinking.sav, 'Delimiter', '~');
-           thinking.names = char(titles{1, 1});
+           thinking.names = char(titles{1,1});
            
            textscan(fileID, '%[~]', 1);
            
            for k = 1:thinking.scan
+               
                    data = textscan(fileID, '%f', thinking.sav, 'Delimiter', ' ');
                    next = data{1, 1};
                    thinking.spectras = [thinking.spectras next];
            end
-           for k = 1:thinking.scan
-                   data = textscan(fileID, '%f', thinking.sav, 'Delimiter', ' ');
+            for k = 1:thinking.scan
+                  data = textscan(fileID, '%f', thinking.sav, 'Delimiter', ' ');
                    next = data{1, 1};
                    thinking.xaxis = [thinking.xaxis next];
-           end
+            end
            
            thinking.xaxis = transpose(thinking.xaxis);
            thinking.spectras = transpose(thinking.spectras);
+                      
+        disp(thinking.xaxis)
+        disp(thinking.spectras)
            
            param = textscan(fileID, '%d', 2, 'Delimiter', '/');
            data = param{1, 1};
+           disp(param)
            
            thinking.xDim = data(1);
            thinking.yDim = data(2);
            
-           
-        disp(thinking.xaxis)
-        disp(thinking.spectras)
+
           
         end
         
