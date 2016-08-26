@@ -24,9 +24,9 @@ redInd = zeros(1);
 for n = 2:length(values)-1
    
     if values(n-1) > threshold && values(n+1) > threshold
-        modvalues(n) = modvalues(n) + 1;
+        modvalues(n) = modvalues(n) + 1*(spectra(n))^(1/2);
     elseif values(n-1) > threshold && values(n+1) > threshold
-        modvalues(n) = modvalues(n) -1;
+        modvalues(n) = modvalues(n) -1*(spectra(n))^(1/2);
     end
     
     if modvalues(n)*spectra(n) >threshold

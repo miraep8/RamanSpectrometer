@@ -80,7 +80,7 @@ end
 if isempty(method),     method = def_method;        end
 if isempty(avgpts),     avgpts = def_avgpts;        end
 dimy = size(y);
-lst = dimy(1);
+lst = dimy(2);
 newdimy = [dimy(1),prod(dimy(2:end))];
 y = reshape(y,newdimy);
 x = 1:lst;
@@ -97,7 +97,8 @@ end
 ok = false;
 while ~ok,
     if interactive,
-        plot(x,real(y(:,1)))
+        plot(x,y)
+        hold on
         set(bffig,'Name','Baseline Fit - Select points')
         fprintf(['\n Now select baseline points to fit by positioning cursor,',...
             '\n   and selecting points with mouse button or key press.',...
