@@ -5,20 +5,38 @@ function Peaks(spectra, waves)
 %   It graphs these two classes of data in two different colors via
 %   scatterplot.
 
-threshold = 2;
-blueInd = zeros(1);
-redInd = zeros(1);
+threshold = 1.1;
 plot(waves,spectra)
 
+values = zeros(1,length(waves));
+values(1) = spectra(1);
+values(length(spectra)) = spectra(end);
+
 for k = 2:(length(waves)-1)
-    dxR = (spectra(k)^(1/2))*((spectra(k)-spectra(k-1))/(waves(k) - waves(k-1)))^2;
-    dxL = (spectra(k)^(1/2))*((-spectra(k)+spectra(k+1))/(-waves(k) + waves(k+1)))^2;
-    if abs(dxR) > threshold || abs(dxL) >threshold || abs(dxR+dxL)> threshold
-        blueInd = [blueInd, k];
-    else
-        redInd = [redInd, k];
-    end    
+    dxR = ((spectra(k)-spectra(k-1))/(waves(k) - waves(k-1)))^2;
+    dxL = ((-spectra(k)+spectra(k+1))/(-waves(k) + waves(k+1)))^2;
+
+    values(k) = abs(dxR) + abs(dxL);
 end
+modvalues = values;
+blueInd = zeros(1);
+redInd = zeros(1);
+for n = 2:length(values)-1
+   
+    if values(n-1) > threshold && values(n+1) > threshold
+        modvalues(n) = modvalues(n) + 1;
+    elseif values(n-1) > threshold && values(n+1) > threshold
+        modvalues(n) = modvalues(n) -1;
+    end
+    
+    if modvalues(n)*spectra(n) >threshold
+        blueInd = [blueInd, n];
+    else
+        redInd = [redInd, n];
+    end
+    
+end
+
 
 blueX = zeros(1, length(blueInd));
 blueY = zeros(1, length(blueInd));
