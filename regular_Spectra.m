@@ -29,9 +29,9 @@ classdef regular_Spectra < spectra_Class
             reg.light_Button = uicontrol(reg.sample_Panel, 'Style', 'togglebutton', 'String', 'Light Sample', 'Position', [15, 40, 100, 17], 'Callback', @reg.light_Spectra_Callback);
             reg.dark_Sample = uicontrol(reg.sample_Panel, 'Style', 'togglebutton', 'String', 'Dark Sample', 'Position', [15, 12, 100, 17], 'Callback', @reg.dark_Spectra_Callback);
             
-            sample = Backdrop_Sample(reg.scans_Num, reg.int_Num, reg.xMin_Num, reg.xMax_Num);
+            sample = Backdrop_Sample(reg.scans_Num, reg.int_Num, reg.xMin_Num, reg.xMax_Num,0);
             reg.light_Spectrum = sample.back_Spectrum;
-            dark = Backdrop_Sample(reg.scans_Num, reg.int_Num, reg.xMin_Num, reg.xMax_Num);
+            dark = Backdrop_Sample(reg.scans_Num, reg.int_Num, reg.xMin_Num, reg.xMax_Num,0);
             reg.dark_Spectrum = dark.back_Spectrum;
             
             while reg.keepGraphing == 1
