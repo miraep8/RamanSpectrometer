@@ -103,10 +103,9 @@ classdef spectra_Class < handle
             app.pause = uicontrol(app.body, 'Style', 'togglebutton', 'String', 'Pause', 'Position', [15, 20, 100, 17], 'Callback', @app.pause_Callback);
             app.close = uicontrol(app.body, 'Style', 'pushbutton', 'String', 'Close', 'Position', [145, 20, 100, 17], 'Callback', @app.close_Callback);
             app.graph = axes('Parent', app.body, 'Position', [.07,.1,.75,.8], 'XLim', [app.xMin_Num, app.xMax_Num]);
-            app.custom_Text = uicontrol(app.body, 'Style', 'edit', 'Position', [1070, 70, 200, 20], 'String', app.custom_Name, 'Callback', @app.name_Callback);
+            app.custom_Text = uicontrol(app.body, 'Style', 'edit', 'Position', [1295, 70, 170, 20], 'String', app.custom_Name, 'Callback', @app.name_Callback);
             app.delete = uicontrol(app.body, 'Style', 'popupmenu', 'Position', [1000, 100, 50, 20], 'String', app.spectra_Names);
-            spectStrings = {'Green Spectrometer (75)'; 'Red Spectrometer (65)'};
-            app.spectIndex = uicontrol(app.body, 'Style', 'listbox', 'Position', [1100, 100, 150, 30], 'String', spectStrings, 'Callback', @app.index_Callback);
+            app.spectIndex = uicontrol(app.body, 'Style', 'listbox', 'Position', [1305, 100, 150, 30], 'String', spectStrings, 'Callback', @app.index_Callback);
             
             uistack(app.graph, 'down')
             

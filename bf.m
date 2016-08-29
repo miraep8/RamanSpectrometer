@@ -3,6 +3,7 @@
 %https://ch.mathworks.com/matlabcentral/fileexchange/24916-baseline-fit/content/bf.m
 
 function [ycorr,yfit] = bf(y,varargin)
+
 % Baseline Fit each column in "x".
 % Syntax: [ycorr,yfit] = bf(y,pts,avgpts,method,confirm);  
 %   ycorr = bf(y);  ycorr = bf(y,method); ycorr = bf(y,avgpts); 

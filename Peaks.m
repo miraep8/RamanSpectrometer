@@ -19,8 +19,8 @@ for k = 2:(length(waves)-1)
     values(k) = abs(dxR) + abs(dxL);
 end
 modvalues = values;
-blueInd = zeros(1);
-redInd = zeros(1);
+blueInd = [];
+redInd = [];
 for n = 2:length(values)-1
    
     if values(n-1) > threshold && values(n+1) > threshold
@@ -40,13 +40,13 @@ end
 
 blueX = zeros(1, length(blueInd));
 blueY = zeros(1, length(blueInd));
-for m = 2:length(blueInd)
+for m = 1:length(blueInd)
     blueX(m) = waves(blueInd(m));
     blueY(m) = spectra(blueInd(m));
 end
 redX = zeros(1, length(redInd));
 redY = zeros(1, length(redInd));
-for m = 2:length(redInd)
+for m = 1:length(redInd)
     redX(m) = waves(redInd(m));
     redY(m) = spectra(redInd(m));
 end 
