@@ -55,7 +55,7 @@ classdef Raman < spectra_Class
             raman.yDim_Label = uicontrol(raman.imaging2D_Panel, 'Style', 'text', 'Position', [12, 10, 50, 20], 'String', 'Y Dim:');
             raman.save = uicontrol(raman.body, 'Style', 'pushbutton', 'String', 'Save', 'Position', [275, 20, 100, 17], 'Callback', @raman.save_Callback);
             
-            dark = Backdrop_Sample(raman.scans_Num, raman.int_Num, raman.xMin_Num, raman.xMax_Num, raman.index);
+            dark = Backdrop_Sample(raman.scans_Num, raman.int_Num, raman.xMin_Num, raman.xMax_Num, raman.index, raman.dName);
             raman.dark_Spectrum = dark.back_Spectrum;
             
             while raman.keepGraphing == 1

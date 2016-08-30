@@ -67,6 +67,8 @@ classdef spectra_Class < handle
         y_Text = 'Intensity';                     %label for the y axis
         custom_Name = 'Sample Name';              %the default sample name
         filename = 'mySpectras.txt';              %the default file name
+        dName = 'Take a Dark Background Sample';
+        lName = 'Take a Light Background Sample';
         
         
     end
@@ -161,7 +163,7 @@ classdef spectra_Class < handle
            app.index = ints -1;
            app.recentChange = 0;
            
-           dark = Backdrop_Sample(app.scans_Num, app.int_Num, app.xMin_Num, app.xMax_Num, app.index);
+           dark = Backdrop_Sample(app.scans_Num, app.int_Num, app.xMin_Num, app.xMax_Num, app.index, app.dName);
            app.dark_Spectrum = dark.back_Spectrum;
             
         end
@@ -213,7 +215,7 @@ classdef spectra_Class < handle
         %off it switches off the sampling process for plot as well. 
         function dark_Spectra_Callback(app, hObject, eventdata)
             
-            dark = Backdrop_Sample(app.scans_Num, app.int_Num, app.xMin_Num, app.xMax_Num, app.dark_Back);
+            dark = Backdrop_Sample(app.scans_Num, app.int_Num, app.xMin_Num, app.xMax_Num, app.dark_Back, app.dName);
             app.dark_Spectrum = dark.back_Spectrum;
             
         end

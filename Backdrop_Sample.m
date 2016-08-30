@@ -24,13 +24,14 @@ classdef Backdrop_Sample < handle
         min
         max
         index
+        type_Label
         
         
     end
     
     methods
         
-        function sample = Backdrop_Sample (numScans, intTime, xMin, xMax, specIndex)
+        function sample = Backdrop_Sample (numScans, intTime, xMin, xMax, specIndex, type)
            
             sample.body = figure('Position', [350, 160, 900, 550]);
             sample.background = axes('Parent', sample.body, 'Position', [0,0,1,1]);
@@ -43,7 +44,10 @@ classdef Backdrop_Sample < handle
             sample.max = xMax;
             sample.index = specIndex;
             
+            
             sample.graph = axes('Parent', sample.body, 'Position', [.07,.1,.75,.8], 'XLim', [sample.min, sample.max]);
+            
+            sample.type_Label = uicontrol(sample.body, 'Style', 'text', 'String', type, 'Position', [300, 500, 100, 200]);
 
             while sample.keepGraphing == 1
                backPlot(sample)
