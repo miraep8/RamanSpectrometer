@@ -28,7 +28,6 @@ classdef Raman < spectra_Class
         greenText = 'Green (532)';      %The text labeling the Green button
         redText = 'Red (633)';          %The text labeling the Red button
         normalText = 'No Laser';        %The text labeling the Normal button
-        recentChange = 1;               %Bool keeps track if recent x axis change needs update.
         saving = 0;
         
         x_Mes2 = 'Wavenumber';

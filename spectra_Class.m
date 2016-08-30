@@ -50,6 +50,7 @@ classdef spectra_Class < handle
         num_Saved = 0;          %tracks number of saved spectras. 
         saved_Waves
         index = 0;              %holds the index of the spectrometer being used. 
+        recentChange = 1;               %Bool keeps track if recent x axis change needs update.
         
                         %Beginning Strings
         xMin_Start               %the default X Min read at the beggining                        
@@ -103,9 +104,10 @@ classdef spectra_Class < handle
             app.pause = uicontrol(app.body, 'Style', 'togglebutton', 'String', 'Pause', 'Position', [15, 20, 100, 17], 'Callback', @app.pause_Callback);
             app.close = uicontrol(app.body, 'Style', 'pushbutton', 'String', 'Close', 'Position', [145, 20, 100, 17], 'Callback', @app.close_Callback);
             app.graph = axes('Parent', app.body, 'Position', [.07,.1,.75,.8], 'XLim', [app.xMin_Num, app.xMax_Num]);
-            app.custom_Text = uicontrol(app.body, 'Style', 'edit', 'Position', [1295, 70, 170, 20], 'String', app.custom_Name, 'Callback', @app.name_Callback);
+            app.custom_Text = uicontrol(app.body, 'Style', 'edit', 'Position', [1345, 70, 170, 20], 'String', app.custom_Name, 'Callback', @app.name_Callback);
             app.delete = uicontrol(app.body, 'Style', 'popupmenu', 'Position', [1000, 100, 50, 20], 'String', app.spectra_Names);
-            app.spectIndex = uicontrol(app.body, 'Style', 'listbox', 'Position', [1305, 100, 150, 30], 'String', spectStrings, 'Callback', @app.index_Callback);
+            spectStrings = getNames;
+            app.spectIndex = uicontrol(app.body, 'Style', 'listbox', 'Position', [1355, 100, 150, 30], 'String', spectStrings, 'Callback', @app.index_Callback);
             
             uistack(app.graph, 'down')
             
@@ -157,6 +159,10 @@ classdef spectra_Class < handle
             
            ints = get(hObject, 'Value');
            app.index = ints -1;
+           app.recentChange = 0;
+           
+           dark = Backdrop_Sample(app.scans_Num, app.int_Num, app.xMin_Num, app.xMax_Num, app.index);
+           app.dark_Spectrum = dark.back_Spectrum;
             
         end
         

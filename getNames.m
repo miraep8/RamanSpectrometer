@@ -6,15 +6,13 @@ function [ names ] = getNames
 spectrometer
 
 numSpectras = wrapper.getNumberOfSpectrometersFound();
-temp = zeros(1, numSpectras);
-for h = 0:numSpectras-1
+for h = 1:numSpectras
    
-    identity = wrapper.getName(h);
+    identity = wrapper.getSerialNumber(h-1);
     temp(h) = identity;
     
 end
-disp(temp)
-names = temp;
+names = char(temp);
 
 end
 
