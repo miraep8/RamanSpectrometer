@@ -28,8 +28,12 @@ classdef spectra_Class < handle
         pause                   %UIControl to pause graphing
         close                   %UIcontrol to stop graphing and exit program
         custom_Text             %UI text box for custom Sample names.
-        delete
+        delete                  %allows you to work through and clear the saved files
+        clear                   %clears the screen from frozen spectra
         spectIndex              %Listbox to select which spectrometer to use
+        freeze                  %Functionality for all spectral programs to freeze the last spectra onto the screen
+        save                    %functionality controls the special save functions. 
+        filename                %allows user to change the filename of the file for spectras
         
                         %Variables for Data Processing
         dark_Spectrum ;         %stores the electrical dark vector sample       
@@ -66,7 +70,7 @@ classdef spectra_Class < handle
         x_Text = 'Wavelength (nm)';               %label for the x axis
         y_Text = 'Intensity';                     %label for the y axis
         custom_Name = 'Sample Name';              %the default sample name
-        filename = 'mySpectras.txt';              %the default file name
+        file_default = 'mySpectras';              %the default file name
         dName = 'Take a Dark Background Sample';
         lName = 'Take a Light Background Sample';
         
@@ -86,7 +90,7 @@ classdef spectra_Class < handle
             app.xMax_Start = num2str(app.xMax_Num); 
             app.xMin_Start = num2str(app.xMin_Num);
             
-            app.body = figure('Position', [0, 20, 1600, 800]);
+            app.body = figure('Position', [20, 60, 1480, 710]);
             app.background = axes('Parent', app.body, 'Position', [0,0,1,1]);
             app.picture = imread('Images/app_background.jpg');
             image(app.background, app.picture)
@@ -103,18 +107,50 @@ classdef spectra_Class < handle
             app.scans_Label = uicontrol(app.specta_Panel, 'Style', 'text', 'String', app.scans_Text, 'Position', [15, 33, 100, 30]); 
             app.int_Label = uicontrol(app.specta_Panel, 'Style', 'text', 'String', app.int_Text, 'Position', [15, 88, 100, 20]); 
             app.dark_Sample = uicontrol(app.sample_Panel, 'Style', 'togglebutton', 'String', 'Dark Sample', 'Position', [15, 20, 100, 17], 'Callback', @app.dark_Spectra_Callback);
-            app.pause = uicontrol(app.body, 'Style', 'togglebutton', 'String', 'Pause', 'Position', [15, 20, 100, 17], 'Callback', @app.pause_Callback);
-            app.close = uicontrol(app.body, 'Style', 'pushbutton', 'String', 'Close', 'Position', [145, 20, 100, 17], 'Callback', @app.close_Callback);
-            app.graph = axes('Parent', app.body, 'Position', [.07,.1,.75,.8], 'XLim', [app.xMin_Num, app.xMax_Num]);
-            app.custom_Text = uicontrol(app.body, 'Style', 'edit', 'Position', [1345, 70, 170, 20], 'String', app.custom_Name, 'Callback', @app.name_Callback);
-            app.delete = uicontrol(app.body, 'Style', 'popupmenu', 'Position', [1000, 100, 50, 20], 'String', app.spectra_Names);
-            spectStrings = getNames;
-            app.spectIndex = uicontrol(app.body, 'Style', 'listbox', 'Position', [1355, 100, 150, 30], 'String', spectStrings, 'Callback', @app.index_Callback);
+            app.pause = uicontrol(app.body, 'Style', 'togglebutton', 'String', 'Pause', 'Position', [900, 670, 50, 17], 'Callback', @app.pause_Callback);
+            app.close = uicontrol(app.body, 'Style', 'pushbutton', 'String', 'Close', 'Position', [960, 670, 50, 17], 'Callback', @app.close_Callback);
+            app.graph = axes('Parent', app.body, 'Position', [.05,.07,.8,.83], 'XLim', [app.xMin_Num, app.xMax_Num]);
+            app.custom_Text = uicontrol(app.body, 'Style', 'edit', 'Position', [1245, 70, 170, 17], 'String', app.custom_Name, 'Callback', @app.name_Callback);
+            app.delete = uicontrol(app.body, 'Style', 'pushbutton', 'Position', [1020, 670, 50, 17], 'String', 'Delete', 'Callback', @app.delete_Callback);
+            app.freeze = uicontrol(app.body, 'Style', 'pushbutton', 'Position', [1080, 670, 50, 17], 'String', 'Freeze', 'Callback', @app.freeze_Callback);
+            app.clear = uicontrol(app.body, 'Style', 'pushbutton', 'Position', [1140, 670, 50, 17], 'String', 'Clear', 'Callback', @app.clear_Callback);
+            app.save = uicontrol(app.body, 'Style', 'pushbutton', 'String', 'Save', 'Position', [275, 20, 100, 17], 'Callback', @app.save_Callback);
+          %  spectStrings = getNames;
+            spectStrings = {'Green', 'Red'};
+            app.spectIndex = uicontrol(app.body, 'Style', 'listbox', 'Position', [1255, 100, 150, 30], 'String', spectStrings, 'Callback', @app.index_Callback);
+            app.filename = uicontrol(app.body, 'Style', 'edit', 'Position', [1255, 50, 100, 20], 'String', app.file_default, 'Callback', @app.filename_Callback);
             
             uistack(app.graph, 'down')
             
         end
+        
+        function filename_Callback(app, hObject, eventdata)
+            
+            app.file_default = get(hObject, 'String');
+            
+        end
+        
+        
+        function clear_Callbacl(app, hObject, eventdata)
+            
+             
+            
+        end       
+        
     
+        function freeze_Callback(app, hOject, eventdata)
+            
+            
+            
+        end        
+        
+        
+        function delete_Callback(app, hObject, eventdata)
+            
+            
+        end
+        
+        
         %triggered when the text in XMin is changed.  This updates the Xmin
         %of the object, meaning that the axis limits on the next plot will
         %change as well. 

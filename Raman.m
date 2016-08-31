@@ -21,7 +21,6 @@ classdef Raman < spectra_Class
         yDim_Text               %editable text to change y dimension in the scanning range.
         xDim_Label              %label for the xDim
         yDim_Label              %label for the yDim
-        save                    %Uicontrol for saving spectra. 
         
                    %Variables for data manipulation
         cutoff = 0;                     %Orginally cutoff is at 0, regualar spectrum         
@@ -53,7 +52,7 @@ classdef Raman < spectra_Class
             raman.yDim_Text = uicontrol(raman.imaging2D_Panel, 'Style', 'edit', 'Position', [62, 40, 50, 20], 'String', num2str(raman.yDim), 'Callback', @raman.yDim_Callback);
             raman.xDim_Label = uicontrol(raman.imaging2D_Panel, 'Style', 'text', 'Position', [12, 40, 50, 20], 'String', 'X Dim:');
             raman.yDim_Label = uicontrol(raman.imaging2D_Panel, 'Style', 'text', 'Position', [12, 10, 50, 20], 'String', 'Y Dim:');
-            raman.save = uicontrol(raman.body, 'Style', 'pushbutton', 'String', 'Save', 'Position', [275, 20, 100, 17], 'Callback', @raman.save_Callback);
+           
             
             dark = Backdrop_Sample(raman.scans_Num, raman.int_Num, raman.xMin_Num, raman.xMax_Num, raman.index, raman.dName);
             raman.dark_Spectrum = dark.back_Spectrum;
@@ -142,6 +141,8 @@ classdef Raman < spectra_Class
         
         function saveHelp(raman)
             
+            name = strcat(raman.file_default, '.txt');
+            
             raman.saving = raman.saving-1;
             raman.num_Saved = raman.num_Saved + 1;
             
@@ -161,16 +162,16 @@ classdef Raman < spectra_Class
             temp = strcat(sav, '/', scan, '\n');
             header = sprintf(temp);
             
-            fileID = fopen(raman.filename, 'wt');
+            fileID = fopen(name, 'wt');
             fprintf(fileID, header);
             fprintf(fileID, '%s', names);
             fclose(fileID);
             
-            dlmwrite(raman.filename, data, '-append', 'delimiter', ' ')
+            dlmwrite(name, data, '-append', 'delimiter', ' ')
             
             raman.saved_Waves = [raman.saved_Waves transpose(raman.wavelengths)];
                         
-            dlmwrite(raman.filename, raman.saved_Waves, '-append', 'delimiter', ' ')
+            dlmwrite(name, raman.saved_Waves, '-append', 'delimiter', ' ')
 
             
             x = num2str(raman.xDim);
@@ -178,7 +179,7 @@ classdef Raman < spectra_Class
             temp = strcat(x, '/', y, '\n');
             footer = sprintf(temp);
             
-            fileID = fopen(raman.filename, 'a');
+            fileID = fopen(name, 'a');
             fprintf(fileID, footer);
             fclose(fileID);
         end

@@ -123,6 +123,7 @@ classdef Analysis < handle
             end
            
            thinking.xaxis = transpose(thinking.xaxis);
+           thinking.xaxis = sort(thinking.xaxis);
            thinking.spectras = transpose(thinking.spectras);
                       
         disp(thinking.xaxis)

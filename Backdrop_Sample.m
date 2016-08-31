@@ -33,7 +33,7 @@ classdef Backdrop_Sample < handle
         
         function sample = Backdrop_Sample (numScans, intTime, xMin, xMax, specIndex, type)
            
-            sample.body = figure('Position', [350, 160, 900, 550]);
+            sample.body = figure('Position', [250, 60, 1100, 650]);
             sample.background = axes('Parent', sample.body, 'Position', [0,0,1,1]);
             
             sample.back_Sample = uicontrol(sample.body, 'Style', 'togglebutton', 'String', 'Take Sample', 'Position', [15, 20, 200, 17], 'Callback', @sample.takeSample_Callback);
@@ -45,9 +45,9 @@ classdef Backdrop_Sample < handle
             sample.index = specIndex;
             
             
-            sample.graph = axes('Parent', sample.body, 'Position', [.07,.1,.75,.8], 'XLim', [sample.min, sample.max]);
+            sample.graph = axes('Parent', sample.body, 'Position', [.07,.1,.9,.75], 'XLim', [sample.min, sample.max]);
             
-            sample.type_Label = uicontrol(sample.body, 'Style', 'text', 'String', type, 'Position', [300, 500, 100, 200]);
+            sample.type_Label = uicontrol(sample.body, 'ForegroundColor', [0,0,0], 'BackgroundColor', [1,1,1], 'FontSize', 20, 'Style', 'text', 'String', type, 'Position', [350, 590, 420, 40]);
 
             while sample.keepGraphing == 1
                backPlot(sample)

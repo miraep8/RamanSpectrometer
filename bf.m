@@ -104,7 +104,8 @@ while ~ok,
         fprintf(['\n Now select baseline points to fit by positioning cursor,',...
             '\n   and selecting points with mouse button or key press.',...
             '\n Press Enter key when done.\n'])
-        [a,b] = ginput;                                 %#ok
+        [a,b] = ginput;         
+        scatter(a,b);
         pts = round(a.');
     end
     pts = sort(pts);
