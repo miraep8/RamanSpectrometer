@@ -14,6 +14,7 @@ classdef regular_Spectra < spectra_Class
     properties
         light_Spectrum
         light_Button
+        sample_Panel
         isAbs_Bool = 0;
     end
     
@@ -25,13 +26,13 @@ classdef regular_Spectra < spectra_Class
             
             reg.isAbs_Bool = isAbs;
             
-            reg.sample_Panel = uipanel(reg.body, 'Title', 'Background Sampling', 'Position', [.85, .37, .1, .12]);
+            reg.sample_Panel = uipanel(reg.body, 'Title', 'Background Sampling', 'Position', [.85, .50, .1, .12]);
             reg.light_Button = uicontrol(reg.sample_Panel, 'Style', 'togglebutton', 'String', 'Light Sample', 'Position', [15, 40, 100, 17], 'Callback', @reg.light_Spectra_Callback);
             reg.dark_Sample = uicontrol(reg.sample_Panel, 'Style', 'togglebutton', 'String', 'Dark Sample', 'Position', [15, 12, 100, 17], 'Callback', @reg.dark_Spectra_Callback);
             
-            sample = Backdrop_Sample(reg.scans_Num, reg.int_Num, reg.xMin_Num, reg.xMax_Num, reg.index, red.lName);
+            sample = Backdrop_Sample(reg.scans_Num, reg.int_Num, reg.xMin_Num, reg.xMax_Num, reg.index, reg.lName);
             reg.light_Spectrum = sample.back_Spectrum;
-            dark = Backdrop_Sample(reg.scans_Num, reg.int_Num, reg.xMin_Num, reg.xMax_Num, red.index, reg.dName);
+            dark = Backdrop_Sample(reg.scans_Num, reg.int_Num, reg.xMin_Num, reg.xMax_Num, reg.index, reg.dName);
             reg.dark_Spectrum = dark.back_Spectrum;
             
             while reg.keepGraphing == 1

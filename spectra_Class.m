@@ -23,7 +23,6 @@ classdef spectra_Class < handle
         int_Label               %Holds text label for Int Button
         limits_Panel            %The panel containing the X Limit controls
         specta_Panel            %The panel containing the scans/int controls
-        sample_Panel            %The panel for the dark (and in subclasses) light sampling
         imaging2D_Panel
         dark_Sample             %The toggle-button for the Dark background sample 
         pause                   %UIControl to pause graphing
@@ -61,6 +60,7 @@ classdef spectra_Class < handle
         recentChange = 1;       %Bool keeps track if recent x axis change needs update.
         xDim = 1;
         yDim = 1;
+        freezing = 0;
         
                         %Beginning Strings
         xMin_Start               %the default X Min read at the beggining                        
@@ -92,7 +92,6 @@ classdef spectra_Class < handle
             %This is the constructor.  It runs when a new object is created
             %it is written in a way to make the graphics between all of
             %the programs fundamentally similar.
-            fileID = fopen(myFile);
             
             [~, xValues] = spectraWizard(app.scans_Num, app.int_Num, app.index);
             app.xMin_Num = xValues(1);
@@ -107,7 +106,6 @@ classdef spectra_Class < handle
             axis off
             app.limits_Panel = uipanel( app.body, 'Title', 'Control X Axis', 'Position', [.85,.63 ,.1,.155]);
             app.specta_Panel = uipanel(app.body, 'Title', 'Spectrum Sampling', 'Position', [.85, .8, .1, .17]);
-            app.sample_Panel = uipanel(app.body, 'Title', 'Background Sampling', 'Position', [.85, .52, .1, .09]);
             app.xMin = uicontrol(app.limits_Panel, 'Style', 'edit', 'Position', [15, 10, 100, 20], 'String', app.xMin_Start, 'Callback', @app.xMin_Callback); 
             app.xMax = uicontrol(app.limits_Panel, 'Style', 'edit', 'Position', [15, 60, 100, 20], 'String', app.xMax_Start, 'Callback', @app.xMax_Callback);
             app.scans = uicontrol(app.specta_Panel, 'Style', 'edit', 'Position', [15, 10, 100, 20], 'String', num2str(app.scans_Num), 'Callback', @app.scans_Callback); 
@@ -116,7 +114,6 @@ classdef spectra_Class < handle
             app.xMax_Label = uicontrol(app.limits_Panel, 'Style', 'text', 'String', app.xMax_Text, 'Position', [15, 85, 100, 20]); 
             app.scans_Label = uicontrol(app.specta_Panel, 'Style', 'text', 'String', app.scans_Text, 'Position', [15, 33, 100, 30]); 
             app.int_Label = uicontrol(app.specta_Panel, 'Style', 'text', 'String', app.int_Text, 'Position', [15, 88, 100, 30]); 
-            app.dark_Sample = uicontrol(app.sample_Panel, 'Style', 'togglebutton', 'String', 'Dark Sample', 'Position', [15, 20, 100, 17], 'Callback', @app.dark_Spectra_Callback);
             app.pause = uicontrol(app.body, 'Style', 'togglebutton', 'String', 'Pause', 'Position', [900, 670, 50, 17], 'Callback', @app.pause_Callback);
             app.close = uicontrol(app.body, 'Style', 'pushbutton', 'String', 'Close', 'Position', [960, 670, 50, 17], 'Callback', @app.close_Callback);
             app.graph = axes('Parent', app.body, 'Position', [.05,.07,.78,.82], 'XLim', [app.xMin_Num, app.xMax_Num]);
@@ -141,12 +138,7 @@ classdef spectra_Class < handle
         function open.Callback(app, hObject, eventdata)
             
         end
-        
-        
-        function save.Callback(app, hObject, eventdata)
-            
-            
-        end
+
         
         function filename_Callback(app, hObject, eventdata)
             
@@ -164,7 +156,7 @@ classdef spectra_Class < handle
     
         function freeze_Callback(app, hOject, eventdata)
             
-            
+            app.freezing = 1;
             
         end        
         

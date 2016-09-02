@@ -16,6 +16,7 @@ classdef Raman < spectra_Class
         redLight_633            %the Radio-Button that indicates Red Raman
         normal_Spectrum         %the Radio Button that indicates normal spectrum
         radio_Panel             %the panel which contains all the radiobuttons
+        sample_Panel            %The panel for the dark sampling
         
                    %Variables for data manipulation
         cutoff = 0;                     %Orginally cutoff is at 0, regualar spectrum         
@@ -41,8 +42,8 @@ classdef Raman < spectra_Class
             raman.normal_Spectrum = uicontrol(raman.radio_Panel, 'Style', 'radiobutton', 'String', raman.normalText, 'Position', [12, 60, 140, 15], 'Callback', @raman.normal_Callback);
             raman.greenLight_532 = uicontrol(raman.radio_Panel, 'Style', 'radiobutton', 'String', raman.greenText, 'Position', [12, 10, 140, 15], 'Callback', @raman.green_Callback);
             raman.redLight_633 = uicontrol(raman.radio_Panel, 'Style', 'radiobutton', 'String', raman.redText, 'Position', [12, 35, 140, 15], 'Callback', @raman.red_Callback);
-
-           
+            raman.sample_Panel = uipanel(raman.body, 'Title', 'Background Sampling', 'Position', [.85, .52, .1, .09]);
+            raman.dark_Sample = uicontrol(raman.sample_Panel, 'Style', 'togglebutton', 'String', 'Dark Sample', 'Position', [15, 20, 100, 17], 'Callback', @raman.dark_Spectra_Callback);
             
             dark = Backdrop_Sample(raman.scans_Num, raman.int_Num, raman.xMin_Num, raman.xMax_Num, raman.index, raman.dName);
             raman.dark_Spectrum = dark.back_Spectrum;
@@ -50,8 +51,8 @@ classdef Raman < spectra_Class
             while raman.keepGraphing == 1
                 if raman.halt == 0
                 ramanPlot(raman)
-               % Peaks(raman.spectrum, raman.wavelengths)
-               % pause(5)
+                Peaks(raman.spectrum, raman.wavelengths)
+                pause(5)
                 end
                 pause(.1)
             end  
@@ -118,55 +119,7 @@ classdef Raman < spectra_Class
             
             raman.yDim = str2double(get(hObject, 'String'));
             
-        end
-        
-        
-        
-        function saveHelp(raman)
-            
-            name = strcat('Saved_Spectras/' ,raman.file_default, '.txt');
-            
-            raman.saving = raman.saving-1;
-            raman.num_Saved = raman.num_Saved + 1;
-            
-            raman.saved_Spectra = [raman.saved_Spectra transpose(raman.spectrum)];
-
-            time = datetime('now');
-            stamp = datestr(time);
-            newName = strcat(raman.custom_Name, stamp, '~');
-            
-            raman.spectra_Names = [raman.spectra_Names, newName];
-            
-            names = raman.spectra_Names;
-            data = raman.saved_Spectra;
-            
-            sav = num2str(raman.num_Saved);
-            scan = num2str(length(data(:,1)));
-            temp = strcat(sav, '/', scan, '\n');
-            header = sprintf(temp);
-            
-            fileID = fopen(name, 'wt');
-            fprintf(fileID, header);
-            fprintf(fileID, '%s', names);
-            fclose(fileID);
-            
-            dlmwrite(name, data, '-append', 'delimiter', ' ')
-            
-            raman.saved_Waves = [raman.saved_Waves transpose(raman.wavelengths)];
-                        
-            dlmwrite(name, raman.saved_Waves, '-append', 'delimiter', ' ')
-
-            
-            x = num2str(raman.xDim);
-            y = num2str(raman.yDim);
-            temp = strcat(x, '/', y, '\n');
-            footer = sprintf(temp);
-            
-            fileID = fopen(name, 'a');
-            fprintf(fileID, footer);
-            fclose(fileID);
-        end
-        
+        end        
     end
 end
 
