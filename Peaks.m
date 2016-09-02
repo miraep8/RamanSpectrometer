@@ -5,7 +5,7 @@ function Peaks(spectra, waves)
 %   It graphs these two classes of data in two different colors via
 %   scatterplot.
 
-threshold = 1.1;
+threshold = 50000;
 plot(waves,spectra)
 
 values = zeros(1,length(waves));
@@ -13,8 +13,8 @@ values(1) = spectra(1);
 values(length(spectra)) = spectra(end);
 
 for k = 2:(length(waves)-1)
-    dxR = ((spectra(k)-spectra(k-1))/(waves(k) - waves(k-1)))^2;
-    dxL = ((-spectra(k)+spectra(k+1))/(-waves(k) + waves(k+1)))^2;
+    dxR = ((spectra(k)-spectra(k-1))/((waves(k) - waves(k-1)))*10);
+    dxL = ((-spectra(k)+spectra(k+1))/((-waves(k) + waves(k+1)))*10);
 
     values(k) = abs(dxR) + abs(dxL);
 end

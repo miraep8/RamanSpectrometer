@@ -51,8 +51,7 @@ classdef Raman < spectra_Class
             while raman.keepGraphing == 1
                 if raman.halt == 0
                 ramanPlot(raman)
-                Peaks(raman.spectrum, raman.wavelengths)
-                pause(5)
+
                 end
                 pause(.1)
             end  

@@ -6,12 +6,14 @@
            
            sav = data(1);
            scan = data(2);
-           disp(data)
            
            titles = textscan(fileID, '%s', sav, 'Delimiter', '~');
            names = char(titles{1,1});
            
            textscan(fileID, '%[~]', 1);
+           
+           spectras = [];
+           waves = [];
            
            for k = 1:scan
                
@@ -33,7 +35,7 @@
            data = param{1, 1};
            disp(param)
            
-           fclose(filedID);
+           fclose(fileID);
            
            xDim = data(1);
            yDim = data(2);
