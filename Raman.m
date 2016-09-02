@@ -43,11 +43,11 @@ classdef Raman < spectra_Class
            
             raman@spectra_Class;
             %declaration and placement of Raman Specific buttons
-            raman.radio_Panel = uibuttongroup(raman.body, 'Title', 'Wavelength of Laser', 'Position', [.85, .22, .1, .14]);
+            raman.radio_Panel = uibuttongroup(raman.body, 'Title', 'Wavelength of Laser', 'Position', [.85, .21, .1, .14]);
             raman.normal_Spectrum = uicontrol(raman.radio_Panel, 'Style', 'radiobutton', 'String', raman.normalText, 'Position', [12, 60, 140, 15], 'Callback', @raman.normal_Callback);
             raman.greenLight_532 = uicontrol(raman.radio_Panel, 'Style', 'radiobutton', 'String', raman.greenText, 'Position', [12, 10, 140, 15], 'Callback', @raman.green_Callback);
             raman.redLight_633 = uicontrol(raman.radio_Panel, 'Style', 'radiobutton', 'String', raman.redText, 'Position', [12, 35, 140, 15], 'Callback', @raman.red_Callback);
-            raman.imaging2D_Panel = uipanel(raman.body, 'Title', 'Dimensions of 2D image', 'Position', [.85, .4, .1, .1]);
+            raman.imaging2D_Panel = uipanel(raman.body, 'Title', 'Dimensions of 2D image', 'Position', [.85, .37, .1, .12]);
             raman.xDim_Text = uicontrol(raman.imaging2D_Panel, 'Style', 'edit', 'Position', [62, 10, 50, 20], 'String', num2str(raman.xDim), 'Callback', @raman.xDim_Callback);
             raman.yDim_Text = uicontrol(raman.imaging2D_Panel, 'Style', 'edit', 'Position', [62, 40, 50, 20], 'String', num2str(raman.yDim), 'Callback', @raman.yDim_Callback);
             raman.xDim_Label = uicontrol(raman.imaging2D_Panel, 'Style', 'text', 'Position', [12, 40, 50, 20], 'String', 'X Dim:');
@@ -141,7 +141,7 @@ classdef Raman < spectra_Class
         
         function saveHelp(raman)
             
-            name = strcat(raman.file_default, '.txt');
+            name = strcat('Saved_Spectras/' ,raman.file_default, '.txt');
             
             raman.saving = raman.saving-1;
             raman.num_Saved = raman.num_Saved + 1;

@@ -105,20 +105,19 @@ classdef spectra_Class < handle
             app.xMin_Label = uicontrol(app.limits_Panel, 'Style', 'text', 'String', app.xMin_Text, 'Position', [15, 35, 100, 20]);          
             app.xMax_Label = uicontrol(app.limits_Panel, 'Style', 'text', 'String', app.xMax_Text, 'Position', [15, 85, 100, 20]); 
             app.scans_Label = uicontrol(app.specta_Panel, 'Style', 'text', 'String', app.scans_Text, 'Position', [15, 33, 100, 30]); 
-            app.int_Label = uicontrol(app.specta_Panel, 'Style', 'text', 'String', app.int_Text, 'Position', [15, 88, 100, 20]); 
+            app.int_Label = uicontrol(app.specta_Panel, 'Style', 'text', 'String', app.int_Text, 'Position', [15, 88, 100, 30]); 
             app.dark_Sample = uicontrol(app.sample_Panel, 'Style', 'togglebutton', 'String', 'Dark Sample', 'Position', [15, 20, 100, 17], 'Callback', @app.dark_Spectra_Callback);
             app.pause = uicontrol(app.body, 'Style', 'togglebutton', 'String', 'Pause', 'Position', [900, 670, 50, 17], 'Callback', @app.pause_Callback);
             app.close = uicontrol(app.body, 'Style', 'pushbutton', 'String', 'Close', 'Position', [960, 670, 50, 17], 'Callback', @app.close_Callback);
-            app.graph = axes('Parent', app.body, 'Position', [.05,.07,.8,.83], 'XLim', [app.xMin_Num, app.xMax_Num]);
+            app.graph = axes('Parent', app.body, 'Position', [.05,.07,.78,.82], 'XLim', [app.xMin_Num, app.xMax_Num]);
             app.custom_Text = uicontrol(app.body, 'Style', 'edit', 'Position', [1245, 70, 170, 17], 'String', app.custom_Name, 'Callback', @app.name_Callback);
             app.delete = uicontrol(app.body, 'Style', 'pushbutton', 'Position', [1020, 670, 50, 17], 'String', 'Delete', 'Callback', @app.delete_Callback);
             app.freeze = uicontrol(app.body, 'Style', 'pushbutton', 'Position', [1080, 670, 50, 17], 'String', 'Freeze', 'Callback', @app.freeze_Callback);
             app.clear = uicontrol(app.body, 'Style', 'pushbutton', 'Position', [1140, 670, 50, 17], 'String', 'Clear', 'Callback', @app.clear_Callback);
-            app.save = uicontrol(app.body, 'Style', 'pushbutton', 'String', 'Save', 'Position', [275, 20, 100, 17], 'Callback', @app.save_Callback);
-          %  spectStrings = getNames;
-            spectStrings = {'Green', 'Red'};
+            app.save = uicontrol(app.body, 'Style', 'pushbutton', 'String', 'Save', 'Position', [840, 670, 50, 17], 'Callback', @app.save_Callback);
+            spectStrings = getNames;
             app.spectIndex = uicontrol(app.body, 'Style', 'listbox', 'Position', [1255, 100, 150, 30], 'String', spectStrings, 'Callback', @app.index_Callback);
-            app.filename = uicontrol(app.body, 'Style', 'edit', 'Position', [1255, 50, 100, 20], 'String', app.file_default, 'Callback', @app.filename_Callback);
+            app.filename = uicontrol(app.body, 'Style', 'edit', 'Position', [1270, 30, 100, 20], 'String', app.file_default, 'Callback', @app.filename_Callback);
             
             uistack(app.graph, 'down')
             
