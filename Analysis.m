@@ -36,7 +36,7 @@ classdef Analysis < handle
         function thinking = Analysis (filename)
            
             thinking.myFile = filename;
-            readFile(thinking);
+            [thinking.xaxis, thinking.spectras, thinking.xDim, thinking.yDim, thinking.names] = readFile(thinking.myFile);
             
             thinking.body = figure('Position', [100, 50, 1300, 700]);
             thinking.background = axes('Parent', thinking.body, 'Position', [0,0,1,1]);
@@ -93,51 +93,6 @@ classdef Analysis < handle
             plot(thinking.graph, thinking.xaxis(:,thinking.num), thinking.spectras(:,thinking.num))
             %xlim( [thinking.xaxis(thinking.num, 1), thinking.xaxis(thinking.num,length(thinking.xaxis(thinking.num,:)))])
             
-        end
-        
-        function readFile(thinking)
-            
-           fileID = fopen(thinking.myFile);
-           param = textscan(fileID, '%d', 2, 'Delimiter', '/');
-           data = param{1, 1};
-           
-           thinking.sav = data(1);
-           thinking.scan = data(2);
-           disp(data)
-           
-           titles = textscan(fileID, '%s', thinking.sav, 'Delimiter', '~');
-           thinking.names = char(titles{1,1});
-           
-           textscan(fileID, '%[~]', 1);
-           
-           for k = 1:thinking.scan
-               
-                   data = textscan(fileID, '%f', thinking.sav, 'Delimiter', ' ');
-                   next = data{1, 1};
-                   thinking.spectras = [thinking.spectras next];
-           end
-            for k = 1:thinking.scan
-                  data = textscan(fileID, '%f', thinking.sav, 'Delimiter', ' ');
-                   next = data{1, 1};
-                   thinking.xaxis = [thinking.xaxis next];
-            end
-           
-           thinking.xaxis = transpose(thinking.xaxis);
-           thinking.xaxis = sort(thinking.xaxis);
-           thinking.spectras = transpose(thinking.spectras);
-                      
-        disp(thinking.xaxis)
-        disp(thinking.spectras)
-           
-           param = textscan(fileID, '%d', 2, 'Delimiter', '/');
-           data = param{1, 1};
-           disp(param)
-           
-           thinking.xDim = data(1);
-           thinking.yDim = data(2);
-           
-
-          
         end
         
         

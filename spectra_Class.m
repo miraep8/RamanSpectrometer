@@ -24,6 +24,7 @@ classdef spectra_Class < handle
         limits_Panel            %The panel containing the X Limit controls
         specta_Panel            %The panel containing the scans/int controls
         sample_Panel            %The panel for the dark (and in subclasses) light sampling
+        imaging2D_Panel
         dark_Sample             %The toggle-button for the Dark background sample 
         pause                   %UIControl to pause graphing
         close                   %UIcontrol to stop graphing and exit program
@@ -33,7 +34,10 @@ classdef spectra_Class < handle
         spectIndex              %Listbox to select which spectrometer to use
         freeze                  %Functionality for all spectral programs to freeze the last spectra onto the screen
         save                    %functionality controls the special save functions. 
+        open
         filename                %allows user to change the filename of the file for spectras
+        xDim_Text
+        yDim_Text
         
                         %Variables for Data Processing
         dark_Spectrum ;         %stores the electrical dark vector sample       
@@ -54,7 +58,9 @@ classdef spectra_Class < handle
         num_Saved = 0;          %tracks number of saved spectras. 
         saved_Waves
         index = 0;              %holds the index of the spectrometer being used. 
-        recentChange = 1;               %Bool keeps track if recent x axis change needs update.
+        recentChange = 1;       %Bool keeps track if recent x axis change needs update.
+        xDim = 1;
+        yDim = 1;
         
                         %Beginning Strings
         xMin_Start               %the default X Min read at the beggining                        
@@ -73,6 +79,9 @@ classdef spectra_Class < handle
         file_default = 'mySpectras';              %the default file name
         dName = 'Take a Dark Background Sample';
         lName = 'Take a Light Background Sample';
+        yDim_Label
+        xDim_Label
+        frozen_files = 'Saved_Spectras/frozen.txt'
         
         
     end
@@ -83,6 +92,7 @@ classdef spectra_Class < handle
             %This is the constructor.  It runs when a new object is created
             %it is written in a way to make the graphics between all of
             %the programs fundamentally similar.
+            fileID = fopen(myFile);
             
             [~, xValues] = spectraWizard(app.scans_Num, app.int_Num, app.index);
             app.xMin_Num = xValues(1);
@@ -115,11 +125,26 @@ classdef spectra_Class < handle
             app.freeze = uicontrol(app.body, 'Style', 'pushbutton', 'Position', [1080, 670, 50, 17], 'String', 'Freeze', 'Callback', @app.freeze_Callback);
             app.clear = uicontrol(app.body, 'Style', 'pushbutton', 'Position', [1140, 670, 50, 17], 'String', 'Clear', 'Callback', @app.clear_Callback);
             app.save = uicontrol(app.body, 'Style', 'pushbutton', 'String', 'Save', 'Position', [840, 670, 50, 17], 'Callback', @app.save_Callback);
+            app.open = uicontrol(app.body, 'Style', 'pushbutton', 'String', 'Save', 'Position', [780, 670, 50, 17], 'Callback', @app.open_Callback);
             spectStrings = getNames;
             app.spectIndex = uicontrol(app.body, 'Style', 'listbox', 'Position', [1255, 100, 150, 30], 'String', spectStrings, 'Callback', @app.index_Callback);
             app.filename = uicontrol(app.body, 'Style', 'edit', 'Position', [1270, 30, 100, 20], 'String', app.file_default, 'Callback', @app.filename_Callback);
-            
+            app.imaging2D_Panel = uipanel(app.body, 'Title', 'Dimensions of 2D image', 'Position', [.85, .37, .1, .12]);
+            app.xDim_Text = uicontrol(app.imaging2D_Panel, 'Style', 'edit', 'Position', [62, 10, 50, 20], 'String', num2str(app.xDim), 'Callback', @app.xDim_Callback);
+            app.yDim_Text = uicontrol(app.imaging2D_Panel, 'Style', 'edit', 'Position', [62, 40, 50, 20], 'String', num2str(app.yDim), 'Callback', @app.yDim_Callback);
+            app.xDim_Label = uicontrol(app.imaging2D_Panel, 'Style', 'text', 'Position', [12, 40, 50, 20], 'String', 'X Dim:');
+            app.yDim_Label = uicontrol(app.imaging2D_Panel, 'Style', 'text', 'Position', [12, 10, 50, 20], 'String', 'Y Dim:');
             uistack(app.graph, 'down')
+            
+        end
+        
+        function open.Callback(app, hObject, eventdata)
+            
+        end
+        
+        
+        function save.Callback(app, hObject, eventdata)
+            
             
         end
         
@@ -146,6 +171,13 @@ classdef spectra_Class < handle
         
         function delete_Callback(app, hObject, eventdata)
             
+            
+        end
+        
+                
+        function save_Callback(app, hObject, eventdata)
+            
+            app.saving = app.xDim*app.yDim;
             
         end
         
