@@ -33,6 +33,7 @@ classdef spectra_Class < handle
         spectIndex              %Listbox to select which spectrometer to use
         freeze                  %Functionality for all spectral programs to freeze the last spectra onto the screen
         save                    %functionality controls the special save functions. 
+        multiSave
         open
         filename                %allows user to change the filename of the file for spectras
         xDim_Text
@@ -60,8 +61,19 @@ classdef spectra_Class < handle
         recentChange = 1;       %Bool keeps track if recent x axis change needs update.
         xDim = 1;
         yDim = 1;
-        freezing = 0;
-        
+        multi = 0;
+        waves_f = [];
+        waves_s = [];
+        waves_m = [];
+        spectrum_f = [];
+        spectrum_s = [];
+        spectrum_m = [];
+        names_s = [];
+        names_f = [];
+        names_m = [];
+        sav_f = 0;
+        sav_s = 0;
+        sav_m = 0;
                         %Beginning Strings
         xMin_Start               %the default X Min read at the beggining                        
         xMax_Start               %the default X MAx read at the beginning
@@ -81,7 +93,7 @@ classdef spectra_Class < handle
         lName = 'Take a Light Background Sample';
         yDim_Label
         xDim_Label
-        frozen_files = 'Saved_Spectras/frozen.txt'
+        frozen_files = 'frozen'
         
         
     end
@@ -122,9 +134,10 @@ classdef spectra_Class < handle
             app.freeze = uicontrol(app.body, 'Style', 'pushbutton', 'Position', [1080, 670, 50, 17], 'String', 'Freeze', 'Callback', @app.freeze_Callback);
             app.clear = uicontrol(app.body, 'Style', 'pushbutton', 'Position', [1140, 670, 50, 17], 'String', 'Clear', 'Callback', @app.clear_Callback);
             app.save = uicontrol(app.body, 'Style', 'pushbutton', 'String', 'Save', 'Position', [840, 670, 50, 17], 'Callback', @app.save_Callback);
-            app.open = uicontrol(app.body, 'Style', 'pushbutton', 'String', 'Save', 'Position', [780, 670, 50, 17], 'Callback', @app.open_Callback);
-            spectStrings = getNames;
-            app.spectIndex = uicontrol(app.body, 'Style', 'listbox', 'Position', [1255, 100, 150, 30], 'String', spectStrings, 'Callback', @app.index_Callback);
+            app.multiSave = uicontrol(app.body, 'Style', 'pushbutton', 'String', 'Multi-Save', 'Position', [710, 670, 60, 17], 'Callback', @app.multiSave_Callback);
+            app.open = uicontrol(app.body, 'Style', 'pushbutton', 'String', 'Open', 'Position', [780, 670, 50, 17], 'Callback', @app.open_Callback);
+          %  spectStrings = getNames;
+          %  app.spectIndex = uicontrol(app.body, 'Style', 'listbox', 'Position', [1255, 100, 150, 30], 'String', spectStrings, 'Callback', @app.index_Callback);
             app.filename = uicontrol(app.body, 'Style', 'edit', 'Position', [1270, 30, 100, 20], 'String', app.file_default, 'Callback', @app.filename_Callback);
             app.imaging2D_Panel = uipanel(app.body, 'Title', 'Dimensions of 2D image', 'Position', [.85, .37, .1, .12]);
             app.xDim_Text = uicontrol(app.imaging2D_Panel, 'Style', 'edit', 'Position', [62, 10, 50, 20], 'String', num2str(app.xDim), 'Callback', @app.xDim_Callback);
@@ -135,41 +148,78 @@ classdef spectra_Class < handle
             
         end
         
-        function open.Callback(app, hObject, eventdata)
+        function xDim_Callback(app, hObject, ~)
+           
+            app.xDim = str2double(get(hObject, 'String'));
+            
+        end
+        
+        function yDim_Callback(app, hObject, ~)
+            
+            app.yDim = str2double(get(hObject, 'String'));
+            
+        end
+        
+        function open_Callback(app, hObject, ~)
             
         end
 
         
-        function filename_Callback(app, hObject, eventdata)
+        function filename_Callback(app, hObject, ~)
             
             app.file_default = get(hObject, 'String');
             
         end
         
         
-        function clear_Callbacl(app, hObject, eventdata)
+        function clear_Callback(app, hObject, ~)
             
              
             
         end       
         
     
-        function freeze_Callback(app, hOject, eventdata)
+        function freeze_Callback(app, hOject, ~)
+
+            app.spectrum_f = [app.spectrum_f transpose(app.spectrum)];
+            app.waves_f = [app.waves_f transpose(app.wavelengths)];
+            app.sav_f = app.sav_f + 1;
             
-            app.freezing = 1;
+            time = datetime('now');
+            temp = datestr(time);
+            stamp = strcat(app.custom_Name, temp, '~');
             
-        end        
+            app.names_f = [app.names_f, stamp];
+            app.names
+            saveHelp(app.file_default, 0, 0, app.spectrum_f, app.waves_f, app.sav_f, app.names_f)
+            
+        end
         
         
-        function delete_Callback(app, hObject, eventdata)
+        function delete_Callback(app, hObject, ~)
             
             
         end
         
-                
-        function save_Callback(app, hObject, eventdata)
+        function multiSave_Callback(app, ~, ~)
+           
+            app.multi = app.xDim*app.yDim;
             
-            app.saving = app.xDim*app.yDim;
+            
+        end
+        
+        function save_Callback(app, ~, ~)
+            
+            app.spectrum_s = [app.spectrum_s transpose(app.spectrum)];
+            app.waves_s = [app.waves_s transpose(app.wavelengths)];
+            app.sav_s = app.sav_s + 1;
+            
+            time = datetime('now');
+            temp = datestr(time);
+            stamp = strcat(app.custom_Name, temp, '~');
+            
+            app.names_s = [app.names_s, stamp];
+            saveHelp(app.file_default, 0, 0, app.spectrum_s, app.waves_s, app.sav_s, app.names_s)
             
         end
         
@@ -177,7 +227,7 @@ classdef spectra_Class < handle
         %triggered when the text in XMin is changed.  This updates the Xmin
         %of the object, meaning that the axis limits on the next plot will
         %change as well. 
-        function xMin_Callback(app, hObject, eventdata)
+        function xMin_Callback(app, hObject, ~)
             
             app.xMin_Num = str2double(get(hObject, 'String'));
             
@@ -186,7 +236,7 @@ classdef spectra_Class < handle
         %triggered when the text in XMax is changed.  This updates the Xmax
         %of the object, meaning that the axis limits on the next plot will
         %change as well. 
-        function xMax_Callback(app, hObject, eventdata)
+        function xMax_Callback(app, hObject, ~)
             
             app.xMax_Num = str2double(get(hObject, 'String'));
             
@@ -195,7 +245,7 @@ classdef spectra_Class < handle
         %triggered when the text in the Scans per average field is changed.
         %This updates the scans property of the object, meaning that the
         %number of scans of the next spectrum will change as well.         
-        function scans_Callback(app, hObject, eventdata)
+        function scans_Callback(app, hObject, ~)
             
             app.scans_Num = str2double(get(hObject, 'String'));
             
@@ -204,19 +254,19 @@ classdef spectra_Class < handle
         %triggered when the text in the Integration time field is changed.
         %This updates the int property of the object, meaning that the
         %integration time of the next spectrum will change as well.
-        function int_Callback(app, hObject, eventdata)
+        function int_Callback(app, hObject, ~)
             
             app.int_Num = str2double(get(hObject, 'String'))*1000;
             
         end
         
-        function name_Callback(app, hObject, eventdata)
+        function name_Callback(app, hObject, ~)
            
             app.custom_Name = get(hObject, 'String');
             
         end
         
-        function index_Callback(app, hObject, eventdata)
+        function index_Callback(app, hObject, ~)
             
            ints = get(hObject, 'Value');
            app.index = ints -1;
@@ -229,7 +279,7 @@ classdef spectra_Class < handle
         
         %This function stop the program from graphing temporarily, freezing
         %the latest spectra on the screen. 
-        function pause_Callback(app, hObject, eventdata)
+        function pause_Callback(app, hObject, ~)
             
             pressed = get(hObject, 'Value');
             if pressed == get(hObject, 'Max')
@@ -242,7 +292,7 @@ classdef spectra_Class < handle
         
         %This function effectivly stops the program from running, and
         %closes the figure. 
-        function close_Callback(app, hObject, eventdata)
+        function close_Callback(app, ~, ~)
             
             app.keepGraphing = 0;
             close(app.body)
@@ -263,8 +313,19 @@ classdef spectra_Class < handle
             [app.spectrum, app.wavelengths] = spectraWizard(app.scans_Num, app.int_Num, app.index);
             app.spectrum = app.spectrum - app.dark_Spectrum;
             
-            %           app.Spectrum = smoothing(app.Spectrum);
+            if app.multi >= 1
+                app.multi = app.multi -1;
+                name = strcat('2D', app.file_default);
+                saveHelp(app, name, app.xDim, app.yDim)
+            end
             
+        end
+        
+        function stamp = makeName(custom)
+  
+            time = datetime('now');
+            temp = datestr(time);
+            stamp = strcat(custom, temp, '~');
             
         end
         
@@ -272,12 +333,37 @@ classdef spectra_Class < handle
         %function monitors the Dark Spectra button, when it is initiated it
         %begins a new dark spectra sampling process.  When it is toggeled
         %off it switches off the sampling process for plot as well. 
-        function dark_Spectra_Callback(app, hObject, eventdata)
+        function dark_Spectra_Callback(app, ~, ~)
             
             dark = Backdrop_Sample(app.scans_Num, app.int_Num, app.xMin_Num, app.xMax_Num, app.dark_Back, app.dName);
             app.dark_Spectrum = dark.back_Spectrum;
             
         end
-    end
+    
+        
+         function saveHelp(filename, xDim, yDim, spectrum, waves, num, identity)
+            
+            name = strcat('Saved_Spectras/', filename, '.txt');
+            
+            scan = num2str(length(spectrum(:,1)));
+            temp = strcat(num, '/', scan, '\n');
+            header = sprintf(temp);
+            
+            fileID = fopen(name, 'wt');
+            fprintf(fileID, header);
+            fprintf(fileID, '%s', identity);
+            fclose(fileID);
+            
+            dlmwrite(name, spectrum, '-append', 'delimiter', ' ')           
+            dlmwrite(name, waves, '-append', 'delimiter', ' ')
+
+            temp = strcat(xDim, '/', yDim, '\n');
+            footer = sprintf(temp);
+            
+            fileID = fopen(name, 'a');
+            fprintf(fileID, footer);
+            fclose(fileID);
+        end
+end
 end
 

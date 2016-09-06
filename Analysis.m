@@ -44,8 +44,9 @@ classdef Analysis < handle
             thinking.samples = uicontrol('Parent', thinking.body, 'Style', 'popupmenu', 'String', thinking.names, 'Position', [1100, 430, 150, 170], 'Callback', @thinking.list_Callback);
             thinking.baseline = uicontrol('Parent', thinking.body, 'Style', 'pushbutton', 'String', 'Base Line', 'Position', [1100, 200, 50, 30], 'Callback', @thinking.base_Callback);
             thinking.sam_Label = uicontrol(thinking.body, 'Style', 'text', 'String', 'Samples:', 'Position', [1150, 610, 50, 20]);
-            thinking.wavelength = uicontrol(thinking.body, 'Style', 'edit', 'String', 'Wavelength', 'Position', [1200, 200, 50, 20], 'Callback', @thinking.map_Callback);
-            
+            if thinking.xDim ~= 0 && thinking.yDim ~= 0
+                thinking.wavelength = uicontrol(thinking.body, 'Style', 'edit', 'String', 'Wavelength', 'Position', [1200, 200, 50, 20], 'Callback', @thinking.map_Callback);
+            end
         end
         
         function map_Callback(thinking, hObject, eventData)
